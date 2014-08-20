@@ -1,0 +1,138 @@
+﻿@model TopMenuModel
+@using System.Text.RegularExpressions
+@using Nop.Web.Models.Catalog;
+@{
+    var isRtl = this.ShouldUseRtlTheme();
+}
+@helper Bracket_Remover(string input) 
+{
+        int index1 = input.IndexOf('(');
+        string result = input.Remove(index1,1);
+
+        index1 = result.IndexOf(')');
+        result = result.Remove(index1,1);
+    
+    @Html.Raw(@result)
+    
+
+
+}
+@helper RenderSubCategoryLine(CategorySimpleModel category, int level)
+{
+    <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">@category.Name
+            &nbsp;<i class="fa fa-angle-down"></i>
+
+            
+                @*@if (category.NumberOfProducts.HasValue)
+                {
+                    <span class="head-number op-number">
+                        
+                        @if(category.NumberOfProducts.Value <= 9)
+                        {
+                            @:0@(category.NumberOfProducts.Value)
+                        }else
+                        {
+                            @(category.NumberOfProducts.Value)
+                        }
+
+                        @#1#Bracket_Remover(@T("Categories.TotalProducts", category.NumberOfProducts.Value).ToString())#1#
+                    </span>
+
+                    <span>&nbsp;</span>
+                }
+            *@
+            
+
+        </a>
+        <ul class="dropdown-menu">
+            @foreach (var subCategory in  category.SubCategories)
+            {
+                @RenderCategoryLine(subCategory, level + 1)
+            }
+        </ul>
+        
+    </li>
+}
+
+@helper RenderCategoryLine(CategorySimpleModel category, int level)
+{
+    if(category.SubCategories.Count > 0)
+    {
+        @RenderSubCategoryLine(category, 0)
+    }
+    else
+    {
+         <li>
+            <a href="@Url.RouteUrl("Category", new { SeName = category.SeName })">@category.Name
+            @*@if (category.NumberOfProducts.HasValue)
+            {
+                <span class="head-number op-number">
+                    @if(category.NumberOfProducts.Value <= 9)
+                    {
+                        @:0@(category.NumberOfProducts.Value)
+                    }else
+                    {
+                        @(category.NumberOfProducts.Value)
+                    }
+
+                    @#1#T("Categories.TotalProducts", category.NumberOfProducts.Value)#1#
+                </span>
+                <span>&nbsp;</span>
+
+            }*@
+            
+            </a>
+         </li>
+    }
+}
+<nav role="navigation" class="navbar navbar-inverse">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+        <button data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" class="navbar-toggle" type="button">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div id="bs-example-navbar-collapse-1" class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+            @Html.Widget("header_menu_before")
+            <li><a href="@Url.RouteUrl("HomePage")"><span class="glyphicon glyphicon-home"></span></a></li>
+            @if (Model.Categories.Count > 0)
+            {
+                foreach (var category in Model.Categories)
+                {
+                    @RenderCategoryLine(category, 0)
+                }
+            }
+            else
+            {
+                //no categories to display?
+                //in this cae let's diplay some default menu items
+                <li><a href="@Url.RouteUrl("HomePage")">@T("HomePage")</a></li>
+                if (Model.RecentlyAddedProductsEnabled)
+                {
+                    <li><a href="@Url.RouteUrl("RecentlyAddedProducts")">@T("Products.NewProducts")</a>
+                    </li>
+                }
+                <li><a href="@Url.RouteUrl("ProductSearch")">@T("Search")</a> </li>
+                <li><a href="@Url.RouteUrl("CustomerInfo")">@T("Account.MyAccount")</a></li>
+                if (Model.BlogEnabled)
+                {
+                    <li><a href="@Url.RouteUrl("Blog")">@T("Blog")</a></li>
+                }
+                if (Model.ForumEnabled)
+                {
+                    <li><a href="@Url.RouteUrl("Boards")">@T("Forum.Forums")</a></li>
+                }
+                <li><a href="@Url.RouteUrl("ContactUs")">@T("ContactUs")</a></li>
+            }
+            @Html.Widget("header_menu_after")
+        </ul>
+    </div><!-- /.navbar-collapse -->
+</nav>

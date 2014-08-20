@@ -1,0 +1,157 @@
+﻿@model CheckoutProgressModel
+@using Nop.Web.Models.Checkout;
+
+<div class="container">
+<div class="row">
+
+    <!-- <img src="~/Themes/BSNopFlaty/Content/services.png" />-->
+
+    <!-- Rectangle Banners -->
+    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6">
+        @if(Model.CheckoutProgressStep == CheckoutProgressStep.Cart)
+        {
+            @:<div class="rec-banner active_position">
+        }else{
+            @:<div class="rec-banner deactive_position">        
+        }
+                    
+        <div class="banner pull-text-center">
+            @*<i class="fa fa-shopping-cart fa-3x"></i>*@
+            <h4><a @(Model.CheckoutProgressStep == CheckoutProgressStep.Cart ? @Html.Raw(" class=\"active-step\"") : @Html.Raw(" class=\"inactive-step\"")) @(Model.CheckoutProgressStep != CheckoutProgressStep.Complete ? @Html.Raw(string.Format(" href=\"{0}\"", Url.RouteUrl("ShoppingCart"))) : null)><div><i class="fa fa-shopping-cart fa-2x"></i></div>@T("Checkout.Progress.Cart")</a></h4>
+            <p></p>
+        </div>
+                    
+        @if(Model.CheckoutProgressStep == CheckoutProgressStep.Cart)
+        {
+            @:</div>
+        }else{
+            @:</div>        
+        }
+    </div>
+
+    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6">
+        @if(Model.CheckoutProgressStep == CheckoutProgressStep.Address)
+        {
+            @:<div class="rec-banner active_position">
+        }else{
+            @:<div class="rec-banner deactive_position">        
+        }
+            
+        <div class="banner pull-text-center">
+            @*<i class="fa fa-map-marker fa-3x"></i>*@
+            <h4><a @(Model.CheckoutProgressStep == CheckoutProgressStep.Address ? @Html.Raw(" class=\"active-step\"") : @Html.Raw(" class=\"inactive-step\"")) @(Model.CheckoutProgressStep != CheckoutProgressStep.Cart && Model.CheckoutProgressStep != CheckoutProgressStep.Complete ? @Html.Raw(string.Format(" href=\"{0}\"", Url.RouteUrl("CheckoutBillingAddress"))) : null)><div><i class="fa fa-map-marker fa-2x"></i></div>@T("Checkout.Progress.Address")</a></h4>
+            <p></p>
+        </div>
+        @if(Model.CheckoutProgressStep == CheckoutProgressStep.Address)
+        {
+            @:</div>
+        }else{
+            @:</div>        
+        }
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6">
+        @if(Model.CheckoutProgressStep == CheckoutProgressStep.Shipping)
+        {
+            @:<div class="rec-banner active_position">
+        }else{
+            @:<div class="rec-banner deactive_position">        
+        }
+        <div class="banner pull-text-center">
+            @*<i class="fa fa-truck fa-3x"></i>*@
+            <h4><a @(Model.CheckoutProgressStep == CheckoutProgressStep.Shipping ? @Html.Raw(" class=\"active-step\"") : @Html.Raw(" class=\"inactive-step\"")) @(Model.CheckoutProgressStep != CheckoutProgressStep.Cart && Model.CheckoutProgressStep != CheckoutProgressStep.Address && Model.CheckoutProgressStep != CheckoutProgressStep.Complete ? @Html.Raw(string.Format(" href=\"{0}\"", Url.RouteUrl("CheckoutShippingMethod"))) : null)><div><i class="fa fa-truck fa-2x"></i></div>@T("Checkout.Progress.Shipping")</a></h4>
+            <p></p>
+        </div>
+        @if(Model.CheckoutProgressStep == CheckoutProgressStep.Shipping)
+        {
+            @:</div>
+        }else{
+            @:</div>        
+        }
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6">
+        @if(Model.CheckoutProgressStep == CheckoutProgressStep.Payment)
+        {
+            @:<div class="rec-banner active_position">
+        }else{
+            @:<div class="rec-banner deactive_position">        
+        }
+        <div class="banner pull-text-center">
+            @*<i class="fa fa-credit-card fa-3x"></i>*@
+            <h4><a @(Model.CheckoutProgressStep == CheckoutProgressStep.Payment ? @Html.Raw(" class=\"active-step\"") : @Html.Raw(" class=\"inactive-step\"")) @(Model.CheckoutProgressStep != CheckoutProgressStep.Cart && Model.CheckoutProgressStep != CheckoutProgressStep.Address && Model.CheckoutProgressStep != CheckoutProgressStep.Shipping && Model.CheckoutProgressStep != CheckoutProgressStep.Complete ? @Html.Raw(string.Format(" href=\"{0}\"", Url.RouteUrl("CheckoutPaymentMethod"))) : null)><div><i class="fa fa-credit-card fa-2x"></i></div>@T("Checkout.Progress.Payment")</a></h4>
+            <p></p>
+        </div>
+        @if(Model.CheckoutProgressStep == CheckoutProgressStep.Payment)
+        {
+            @:</div>
+        }else{
+            @:</div>        
+        }
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6">
+        @if(Model.CheckoutProgressStep == CheckoutProgressStep.Confirm)
+        {
+            @:<div class="rec-banner active_position">
+        }else{
+            @:<div class="rec-banner deactive_position">        
+        }
+        <div class="banner pull-text-center">
+            @*<i class="fa fa-thumbs-up fa-3x"></i>*@
+            <h4><a @(Model.CheckoutProgressStep == CheckoutProgressStep.Confirm ? @Html.Raw(" class=\"active-step\"") : @Html.Raw(" class=\"inactive-step\"")) @(Model.CheckoutProgressStep != CheckoutProgressStep.Cart && Model.CheckoutProgressStep != CheckoutProgressStep.Address && Model.CheckoutProgressStep != CheckoutProgressStep.Shipping && Model.CheckoutProgressStep != CheckoutProgressStep.Payment && Model.CheckoutProgressStep != CheckoutProgressStep.Complete ? @Html.Raw(string.Format(" href=\"{0}\"", Url.RouteUrl("CheckoutConfirm"))) : null)><div><i class="fa fa-thumbs-up fa-2x"></i></div>@T("Checkout.Progress.Confirm")</a></h4>
+            <p></p>
+        </div>
+        @if(Model.CheckoutProgressStep == CheckoutProgressStep.Confirm)
+        {
+            @:</div>
+        }else{
+            @:</div>        
+        }
+    </div>
+
+    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6">
+        @if(Model.CheckoutProgressStep == CheckoutProgressStep.Complete)
+        {
+            @:<div class="rec-banner active_position">
+        }else{
+            @:<div class="rec-banner deactive_position">        
+        }
+        <div class="banner pull-text-center">
+            @*<i class="fa fa-check fa-3x"></i>*@
+            <h4><a @(Model.CheckoutProgressStep == CheckoutProgressStep.Complete ? @Html.Raw(" class=\"active-step\"") : @Html.Raw(" class=\"inactive-step\""))><div><i class="fa fa-check fa-2x"></i></div>@T("Checkout.Progress.Complete")</a></h4>
+            <p></p>
+
+        </div>
+        @if(Model.CheckoutProgressStep == CheckoutProgressStep.Complete)
+        {
+            @:</div>
+        }else{
+            @:</div>        
+        }
+    </div>
+
+
+    <!-- end: Rectangle Banners -->
+</div>
+<br/>
+</div>
+
+
+
+
+@*<div class="order-progress">
+    <ul>
+        @Html.Widget("checkout_progress_before")
+        <li><a @(Model.CheckoutProgressStep == CheckoutProgressStep.Cart ? @Html.Raw(" class=\"active-step\"") : @Html.Raw(" class=\"inactive-step\"")) @(Model.CheckoutProgressStep != CheckoutProgressStep.Complete ? @Html.Raw(string.Format(" href=\"{0}\"", Url.RouteUrl("ShoppingCart"))) : null)>@T("Checkout.Progress.Cart")</a>
+        </li>
+        <li><a @(Model.CheckoutProgressStep == CheckoutProgressStep.Address ? @Html.Raw(" class=\"active-step\"") : @Html.Raw(" class=\"inactive-step\"")) @(Model.CheckoutProgressStep != CheckoutProgressStep.Cart && Model.CheckoutProgressStep != CheckoutProgressStep.Complete ? @Html.Raw(string.Format(" href=\"{0}\"", Url.RouteUrl("CheckoutBillingAddress"))) : null)>@T("Checkout.Progress.Address")</a>
+        </li>
+        <li><a @(Model.CheckoutProgressStep == CheckoutProgressStep.Shipping ? @Html.Raw(" class=\"active-step\"") : @Html.Raw(" class=\"inactive-step\"")) @(Model.CheckoutProgressStep != CheckoutProgressStep.Cart && Model.CheckoutProgressStep != CheckoutProgressStep.Address && Model.CheckoutProgressStep != CheckoutProgressStep.Complete ? @Html.Raw(string.Format(" href=\"{0}\"", Url.RouteUrl("CheckoutShippingMethod"))) : null)>@T("Checkout.Progress.Shipping")</a>
+        </li>
+        <li><a @(Model.CheckoutProgressStep == CheckoutProgressStep.Payment ? @Html.Raw(" class=\"active-step\"") : @Html.Raw(" class=\"inactive-step\"")) @(Model.CheckoutProgressStep != CheckoutProgressStep.Cart && Model.CheckoutProgressStep != CheckoutProgressStep.Address && Model.CheckoutProgressStep != CheckoutProgressStep.Shipping && Model.CheckoutProgressStep != CheckoutProgressStep.Complete ? @Html.Raw(string.Format(" href=\"{0}\"", Url.RouteUrl("CheckoutPaymentMethod"))) : null)>@T("Checkout.Progress.Payment")</a>
+        </li>
+        <li><a @(Model.CheckoutProgressStep == CheckoutProgressStep.Confirm ? @Html.Raw(" class=\"active-step\"") : @Html.Raw(" class=\"inactive-step\"")) @(Model.CheckoutProgressStep != CheckoutProgressStep.Cart && Model.CheckoutProgressStep != CheckoutProgressStep.Address && Model.CheckoutProgressStep != CheckoutProgressStep.Shipping && Model.CheckoutProgressStep != CheckoutProgressStep.Payment && Model.CheckoutProgressStep != CheckoutProgressStep.Complete ? @Html.Raw(string.Format(" href=\"{0}\"", Url.RouteUrl("CheckoutConfirm"))) : null)>@T("Checkout.Progress.Confirm")</a>
+        </li>
+        <li><a @(Model.CheckoutProgressStep == CheckoutProgressStep.Complete ? @Html.Raw(" class=\"active-step\"") : @Html.Raw(" class=\"inactive-step\""))>@T("Checkout.Progress.Complete")</a>
+        </li>
+        @Html.Widget("checkout_progress_after")
+    </ul>
+</div>*@

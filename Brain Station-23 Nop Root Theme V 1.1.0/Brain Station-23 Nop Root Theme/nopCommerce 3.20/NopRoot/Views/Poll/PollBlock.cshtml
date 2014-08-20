@@ -1,0 +1,11 @@
+﻿@model PollModel
+@using Nop.Web.Models.Polls;
+<div class="block-poll panel panel-default side-nav">
+    <div class="panel-heading">
+        <strong>@T("Polls.Title")</strong>
+    </div>
+    <div class="panel-body">
+        
+        @Html.Partial("_Poll", Model)
+    </div>
+</div>

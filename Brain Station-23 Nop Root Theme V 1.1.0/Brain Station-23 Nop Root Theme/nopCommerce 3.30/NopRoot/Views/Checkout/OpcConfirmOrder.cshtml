@@ -1,0 +1,39 @@
+﻿@model CheckoutConfirmModel
+@using Nop.Web.Models.Checkout;
+<div >
+    @Html.Widget("op_checkout_confirm_top")
+    <div >
+        <div >
+            @if (!String.IsNullOrEmpty(Model.MinOrderTotalWarning))
+            {
+                <div class="alert alert-danger" >@Model.MinOrderTotalWarning</div>
+            }
+        </div>
+        @if (Model.Warnings.Count > 0)
+        {
+            <div class="alert alert-danger">
+                
+                    @foreach (var warning in Model.Warnings)
+                    {
+                        <div>@warning</div>
+                    }
+                
+            </div>
+        }
+    </div>
+    @Html.Widget("op_checkout_confirm_bottom")
+    <div>
+        @Html.Action("OrderSummary", "ShoppingCart", new { prepareAndDisplayOrderReviewData = true })
+    </div>    
+    @if (String.IsNullOrEmpty(Model.MinOrderTotalWarning) && Model.TermsOfServiceOnOrderConfirmPage)
+    {
+        <div id="terms-of-service-warning-box" title="@T("Checkout.TermsOfService")" style="display:none;">
+            <p>@T("Checkout.TermsOfService.PleaseAccept")</p>
+        </div>
+        <div class="terms-of-service">
+            <input id="termsofservice" type="checkbox" name="termsofservice" />
+            @T("Checkout.TermsOfService.IAccept")
+            <span class="read" onclick="javascript:OpenWindow('@Url.RouteUrl("TopicPopup", new { SystemName = "conditionsofUse" })', 450, 500, true)">@T("Checkout.TermsOfService.Read")</span>
+        </div>
+    }
+</div>

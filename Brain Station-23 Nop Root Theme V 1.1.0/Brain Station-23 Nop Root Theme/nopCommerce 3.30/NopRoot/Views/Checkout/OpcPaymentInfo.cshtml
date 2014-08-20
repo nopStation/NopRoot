@@ -1,0 +1,29 @@
+﻿@model CheckoutPaymentInfoModel
+@using Nop.Web.Models.Checkout;
+<div >
+    @Html.Widget("op_checkout_payment_info_top")
+    <div class="row">
+        <div class="col-lg-12">
+            @Html.Action(Model.PaymentInfoActionName, Model.PaymentInfoControllerName, Model.PaymentInfoRouteValues)
+        </div>
+    </div>
+    <div class="row">
+        
+        <div class="alert">
+            @Html.ValidationSummary(false)
+        </div>
+    </div>
+    @Html.Widget("op_checkout_payment_info_bottom")
+    @if (Model.DisplayOrderTotals)
+    {
+        <div class="row">
+            <div class="col-lg-12">
+                
+            
+                @Html.Action("OrderSummary", "ShoppingCart")
+            
+            </div>
+        </div>
+
+    }
+</div>

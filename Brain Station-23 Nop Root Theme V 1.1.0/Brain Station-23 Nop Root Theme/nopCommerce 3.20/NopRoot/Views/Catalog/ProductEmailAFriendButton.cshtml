@@ -1,0 +1,6 @@
+﻿@model ProductEmailAFriendModel
+@using Nop.Web.Models.Catalog;
+<div class="email-a-friend col-md-5">
+    <button type="button" class="btn btn-default email-a-friend-button"  onclick="setLocation('@Url.RouteUrl("ProductEmailAFriend", new { productId = Model.ProductId })')" ><i class="fa fa-envelope fa-fw"></i> @T("Products.EmailAFriend") </button>
+</div>
+

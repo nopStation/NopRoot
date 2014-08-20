@@ -1,0 +1,131 @@
+﻿@model IList<ProductOverviewModel>
+@using Nop.Web.Models.Catalog;
+@if (Model.Count > 0)
+{
+    @*<div class="block block-recently-viewed-products">
+        <div class="title">
+            <strong>@T("Products.RecentlyViewedProducts")</strong>
+        </div>
+        <div class="listbox">
+            <ul class="list">
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                    var product = Model[i];
+                    <li @(i == Model.Count - 1 ? @Html.Raw(" class=\"last\"") : null)>
+                        @if (!String.IsNullOrEmpty(product.DefaultPictureModel.ImageUrl))
+                        {
+                            <div class="product-picture">
+                                <a href="@Url.RouteUrl("Product", new { SeName = product.SeName })" title="@product.DefaultPictureModel.Title">
+                                    <img alt="@product.DefaultPictureModel.AlternateText" src="@product.DefaultPictureModel.ImageUrl" title="@product.DefaultPictureModel.Title" />
+                                </a>
+                            </div>
+                        }
+                        <a href="@Url.RouteUrl("Product", new { SeName = product.SeName })" class="product-name">@product.Name</a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>*@
+
+    
+    <div class="panel panel-default side-nav">
+        <div class="panel-heading"><span>@T("Products.RecentlyViewedProducts")</span></div>
+
+        <!-- Compare -->
+        <div class="panel-body">
+            <ul class="nav">
+              
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                    var product = Model[i];
+                    
+                    <li>
+                        <a href="@Url.RouteUrl("Product", new { SeName = product.SeName })" title="@product.DefaultPictureModel.Title">@if (!String.IsNullOrEmpty(product.DefaultPictureModel.ImageUrl)){
+                            <img class="img-thumbnail" alt="@product.DefaultPictureModel.AlternateText" src="@product.DefaultPictureModel.ImageUrl" title="@product.DefaultPictureModel.Title" />
+                        }
+                        &nbsp;@product.Name</a>
+                    </li> 
+              
+                    
+                    @*<li @(i == Model.Count - 1 ? @Html.Raw(" class=\"last\"") : null)>
+                        @if (!String.IsNullOrEmpty(product.DefaultPictureModel.ImageUrl))
+                        {
+                            <div class="product-picture">
+                                <a href="@Url.RouteUrl("Product", new { SeName = product.SeName })" title="@product.DefaultPictureModel.Title">
+                                    <img alt="@product.DefaultPictureModel.AlternateText" src="@product.DefaultPictureModel.ImageUrl" title="@product.DefaultPictureModel.Title" />
+                                </a>
+                            </div>
+                        }
+                        <a href="@Url.RouteUrl("Product", new { SeName = product.SeName })" class="product-name">@product.Name</a>
+                    </li>*@
+                }
+              
+              
+            </ul>
+        
+            <!-- Compare --> 
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+    @*<div class="row">
+    <div class="col-lg-12">
+      <div class="box-heading"><span>@T("Products.RecentlyViewedProducts")</span></div>
+      <div class="box-content">
+          <div class="box-products slide carousel-fade" id="recently_viewd">
+              <ol class="carousel-indicators">
+                
+                  @for (int i = 0; i < Model.Count; i++)
+                  {
+                      if(i==0)
+                      {
+                          @:<li class="active" data-slide-to="0" data-target="#recently_viewd"></li>
+                      }else
+                      {
+                          @:<li class="" data-slide-to="1" data-target="#recently_viewd"></li>
+                      }
+                  }
+
+                
+                
+              </ol>
+              <div class="carousel-inner"> 
+                  <!-- item -->
+                  @{
+                      var ki = 0;
+                  }
+                  @foreach (var item in Model)
+                  {
+                      if(ki==0)
+                      {
+                          @:<div class="item active">
+                      }else
+                      {
+                          @:<div class="item">
+                      }
+                      @Html.Partial("_ProductBox", item)
+                      @:</div>
+                      ki++;
+                  }
+            
+            
+              </div>
+          </div>
+          <div class="carousel-controls"> <a class="carousel-control left" data-slide="prev" href="#recently_viewd"> <i class="fa fa-angle-left fa-fw"></i> </a> <a class="carousel-control right" data-slide="next" href="#recently_viewd"> <i class="fa fa-angle-right fa-fw"></i> </a> </div>
+          <div class="nav-bg"></div>
+      </div>
+    </div>
+    </div>*@
+
+
+
+
+
+
+}

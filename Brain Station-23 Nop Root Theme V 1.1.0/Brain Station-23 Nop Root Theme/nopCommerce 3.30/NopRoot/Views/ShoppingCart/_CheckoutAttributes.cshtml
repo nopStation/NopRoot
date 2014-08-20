@@ -1,0 +1,118 @@
+﻿@model IList<Nop.Web.Models.ShoppingCart.ShoppingCartModel.CheckoutAttributeModel>
+@using Nop.Core.Domain.Catalog;
+@if (Model.Count > 0)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <dl class="offer offer-default">
+                @foreach (var attribute in Model)
+                {
+                    string controlId = string.Format("checkout_attribute_{0}", attribute.Id);
+                    string textPrompt = !string.IsNullOrEmpty(attribute.TextPrompt) ? attribute.TextPrompt : attribute.Name;
+                    <dt><label class="text-prompt">
+                        @textPrompt
+                    </label>
+                        @if (attribute.IsRequired)
+                        {
+                            <span class="required">*</span>
+                        }
+                    </dt>
+                    <dd>
+                        @switch (attribute.AttributeControlType)
+                        {
+                            case AttributeControlType.DropdownList:
+                                {
+                            <select name="@(controlId)" id="@(controlId)" class="form-control square-box">
+                                @if (!attribute.IsRequired)
+                                {
+                                    <option value="0">---</option>
+                                }
+                                @foreach (var caValue in attribute.Values)
+                                {
+                                    <option selected="@caValue.IsPreSelected" value="@caValue.Id">@caValue.Name
+                                        @(!String.IsNullOrEmpty(caValue.PriceAdjustment) ? " [" + caValue.PriceAdjustment + "]" : null)
+                                    </option>
+                                }
+                            </select>
+                                }
+                                break;
+                            case AttributeControlType.RadioList:
+                                {
+                            <div >
+                                @foreach (var caValue in attribute.Values)
+                                {
+                                    <div>
+                                        <span><input id="@(controlId)_@(caValue.Id)" type="radio" name="@(controlId)" value="@caValue.Id" checked="@caValue.IsPreSelected" /></span>
+                                        <span><label for="@(controlId)_@(caValue.Id)">@caValue.Name @(!String.IsNullOrEmpty(caValue.PriceAdjustment) ? " [" + caValue.PriceAdjustment + "]" : null)</label></span>
+                                    </div>
+                                }
+                            </div>
+                                }
+                                break;
+                            case AttributeControlType.Checkboxes:
+                                {
+                            <div >
+                                @foreach (var caValue in attribute.Values)
+                                {
+                                    <div>
+                                        <span><input id="@(controlId)_@(caValue.Id)" type="checkbox" name="@(controlId)" value="@caValue.Id" checked="@caValue.IsPreSelected" /></span>
+                                        <span><label for="@(controlId)_@(caValue.Id)">@caValue.Name @(!String.IsNullOrEmpty(caValue.PriceAdjustment) ? " [" + caValue.PriceAdjustment + "]" : null)</label></span>
+                                    </div>
+                                }
+                            </div>
+                                }
+                                break;
+                            case AttributeControlType.TextBox:
+                                {
+                            <input name="@(controlId)" type="text" class="form-control square-box" id="@(controlId)" @(!String.IsNullOrWhiteSpace(attribute.DefaultValue) ? " value=" + attribute.DefaultValue : null) />
+                                }
+                                break;
+                            case AttributeControlType.MultilineTextbox:
+                                {
+                            <textarea class="form-control square-box" id="@(controlId)" name="@(controlId)">@(!String.IsNullOrWhiteSpace(attribute.DefaultValue) ? attribute.DefaultValue : null)</textarea>
+                                }
+                                break;
+                            case AttributeControlType.Datepicker:
+                                {
+                            @Html.DatePickerDropDowns(controlId + "_day", controlId + "_month", controlId + "_year", DateTime.Now.Year, DateTime.Now.Year + 1, attribute.SelectedDay, attribute.SelectedMonth, attribute.SelectedYear)
+                                }
+                                break;
+                            case AttributeControlType.FileUpload:
+                                {
+                            <input class="form-control square-box" type="file" id="@(controlId)" name="@(controlId)"></input>
+                                }
+                                break;
+                            case AttributeControlType.ColorSquares:
+                                {
+                                    <ul class="option-list color-squares" id="color-squares-@(attribute.Id)">
+                                        @foreach (var caValue in attribute.Values)
+                                        {
+                                            <li @(caValue.IsPreSelected ? @Html.Raw(" class=\"selected-value\"") : null)>
+                                                <label for="@(controlId)_@(caValue.Id)">
+                                                    <span class="color-container" title="@caValue.Name @(!String.IsNullOrEmpty(caValue.PriceAdjustment) ? " [" + caValue.PriceAdjustment + "]" : null)">
+                                                        <span class="color" style="background-color:@(caValue.ColorSquaresRgb);">&nbsp;</span>
+                                                    </span>
+                                                    <input id="@(controlId)_@(caValue.Id)" type="radio" name="@(controlId)" value="@caValue.Id" checked="@caValue.IsPreSelected" />
+                                                    @*uncomment below to display attribute value name*@
+                                                    @*<span class="name">@caValue.Name @(!String.IsNullOrEmpty(caValue.PriceAdjustment) ? " [" + caValue.PriceAdjustment + "]" : null)</span>*@
+                                                </label>
+                                            </li>
+                                        }
+                                    </ul>
+                                    <script type="text/javascript">
+                                        $(document).ready(function() {
+                                            $('.checkout-attributes #color-squares-@(attribute.Id)').delegate('input', 'click', function (event) {
+                                                $('.checkout-attributes #color-squares-@(attribute.Id)').find('li').removeClass('selected-value');
+                                                $(this).closest('li').addClass('selected-value');
+                                            });
+                                       });
+                                    </script>
+                                }
+                                break;
+                        }
+                    </dd>
+                }
+            </dl>
+        </div>    
+    </div>
+}

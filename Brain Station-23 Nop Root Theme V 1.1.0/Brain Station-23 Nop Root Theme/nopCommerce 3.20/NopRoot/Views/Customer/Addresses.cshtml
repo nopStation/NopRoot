@@ -1,0 +1,114 @@
+﻿@model CustomerAddressListModel
+@using Nop.Web.Models.Customer;
+@{
+    Layout = "~/Views/Shared/_ColumnsTwo.cshtml";
+
+    //title
+    Html.AddTitleParts(T("PageTitle.Account").Text);
+}
+@section left
+{
+    @Html.Partial("MyAccountNavigation", Model.NavigationModel, new ViewDataDictionary())
+}
+<div class="panel panel-default form-panel">
+    <div class="panel-heading">
+        <h3>@T("Account.MyAccount") - @T("Account.CustomerAddresses")</h3>
+    </div>
+    <div class="panel-body">
+        <div class="address-list">
+            @if (Model.Addresses.Count > 0)
+            {
+                for (int i = 0; i < Model.Addresses.Count; i++)
+                {
+                    var address = Model.Addresses[i];
+                    
+                    <div class="section address-item">
+                        <div id="legend">
+                            <legend>@address.FirstName @address.LastName</legend>
+                        </div>
+                        <ul class="info">
+                            <li class="name">
+                                @address.FirstName @address.LastName
+                            </li>
+                            <li class="email">
+                                @Html.LabelFor(model => model.Addresses[i].Email, new { }, ":")
+                                @address.Email
+                            </li>
+                            @if (address.PhoneEnabled)
+                            {
+                                <li class="phone">
+                                    @Html.LabelFor(model => model.Addresses[i].PhoneNumber, new { }, ":")
+                                    @address.PhoneNumber
+                                </li>
+                            }
+                            @if (address.FaxEnabled)
+                            {
+                                <li class="fax">
+                                    @Html.LabelFor(model => model.Addresses[i].FaxNumber, new { }, ":")
+                                    @address.FaxNumber
+                                </li>
+                            }
+                            @if (address.CompanyEnabled && !String.IsNullOrEmpty(address.Company))
+                            {
+                                <li class="company">@address.Company</li>
+                            }
+                            @if (address.StreetAddressEnabled)
+                            {
+                                <li class="address1">
+                                    @address.Address1
+                                </li>
+                            }
+                            @if (address.StreetAddress2Enabled && !String.IsNullOrEmpty(address.Address2))
+                            {
+                                <li class="address2">
+                                    @address.Address2
+                                </li>
+                            }
+                            @if (address.CityEnabled || address.StateProvinceEnabled || address.ZipPostalCodeEnabled)
+                            {
+                                <li class="city-state-zip">
+                                    @if (address.CityEnabled)
+                                    {
+                                        @address.City
+                                    }
+                                    @if (address.CityEnabled && (address.StateProvinceEnabled || address.ZipPostalCodeEnabled))
+                                    {
+                                        <text>,</text>
+                                    }
+                                    @if (address.StateProvinceEnabled)
+                                    {
+                                        @address.StateProvinceName
+                                    }
+                                    @if (address.ZipPostalCodeEnabled)
+                                    {
+                                        @address.ZipPostalCode
+                                    }
+                                </li>
+                            }
+                            @if (address.CountryEnabled && !String.IsNullOrEmpty(address.CountryName))
+                            {
+                                <li class="country">
+                                    @address.CountryName
+                                </li>
+                            }
+                        </ul>
+                        <div class="buttons left">
+                            <input type="button" class="button-2 edit-address-button btn btn-default" onclick="location.href='@(Url.RouteUrl("CustomerAddressEdit", new { addressId = address.Id }))'" value='@T("Common.Edit")' />
+                            <input type="button" class="button-2 delete-address-button btn btn-default" onclick="if (confirm('@(T("Common.AreYouSure").Text)')) {location.href='@(Url.RouteUrl("CustomerAddressDelete", new { addressId = address.Id }))';}" value="@T("Common.Delete")" />
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                @T("Account.CustomerAddresses.NoAddresses")
+            }
+        </div>
+        <div id="legend">
+             <legend></legend>
+        </div>
+        <div class="add-button">
+            <input type="button" class="button-1 add-address-button btn btn-default" onclick="location.href='@Url.RouteUrl("CustomerAddressAdd")'" value="@T("Common.AddNew")" />
+        </div>
+    </div>
+</div>

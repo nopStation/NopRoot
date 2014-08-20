@@ -1,0 +1,118 @@
+﻿@model SubmitReturnRequestModel
+@using Nop.Web.Models.Order;
+@{
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
+
+    //title
+    Html.AddTitleParts(T("PageTitle.ReturnItems").Text);
+}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default form-panel">
+                <div class="panel-heading">
+                    <h3>@string.Format(T("ReturnRequests.Title").Text, Model.OrderId)</h3>
+                </div>
+                <div class="panel-body">
+                    @if (!String.IsNullOrEmpty(Model.Result))
+                    {
+                        <div class="result">
+                            @Model.Result
+                        </div>
+                    }
+                    else
+                    {
+                        using (Html.BeginForm())
+                        {
+                            <div class="section">
+                                <div class="title">
+                                    <strong>@T("ReturnRequests.SelectProduct(s)")</strong>
+                                </div>
+                                <br/>
+
+                                <table class="@*data-table*@ cart table table-bordered">
+                                    @*<colgroup>
+                                        <col />
+                                        <col />
+                                        <col width="1" />
+                                    </colgroup>*@
+                                    <thead>
+                                        <tr>
+                                            <th class="a-center name">
+                                                @T("ReturnRequests.Products.Name")
+                                            </th>
+                                            <th class="a-center price">
+                                                @T("ReturnRequests.Products.Price")
+                                            </th>
+                                            <th class="a-center quantity">
+                                                @T("ReturnRequests.Products.Quantity")
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.Items)
+                                        {   
+                                            <tr>
+                                                <td class="a-left name">
+                                                    <a href="@Url.RouteUrl("Product", new { SeName = item.ProductSeName })">@item.ProductName</a>
+                                                    @if (!String.IsNullOrEmpty(item.AttributeInfo))
+                                                    {
+                                                        <div class="attributes">
+                                                            @Html.Raw(item.AttributeInfo)
+                                                        </div>
+                                                    }
+                                                </td>
+                                                <td class="a-left price">
+                                                    @item.UnitPrice
+                                                </td>
+                                                <td class="a-left quantity">
+                                                    <select name="quantity@(item.Id)" class="form-control">
+                                                        @for (int i = 0; i <= item.Quantity; i++)
+                                                        {
+                                                            <option value="@(i)">@(i)</option>
+                                                        }
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="row space20"></div>
+
+                            <div class="fieldset">
+                                <div class="title">
+                                    <strong>@T("ReturnRequests.WhyReturning")</strong>
+                                </div>
+                                <br/>
+
+                                <div class="form-fields">
+                                    <div class="inputs">
+                                        @Html.LabelFor(model => model.ReturnReason, new { }, ":")
+                                        @Html.DropDownListFor(model => model.ReturnReason, Model.AvailableReturnReasons, new { @class = "form-control" })
+                                    </div>
+                                    <div class="inputs">
+                                        @Html.LabelFor(model => model.ReturnAction, new { }, ":")
+                                        @Html.DropDownListFor(model => model.ReturnAction, Model.AvailableReturnActions, new { @class = "form-control" })
+                                    </div>
+                                    <div class="inputs">
+                                        @Html.LabelFor(model => model.Comments, new { }, ":")
+                                        @Html.TextAreaFor(model => model.Comments, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.Comments)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="buttons pull-text-right">
+                                <input type="submit" name="submit-return-request" class="btn btn-default" value="@T("ReturnRequests.Submit")" />
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+

@@ -1,0 +1,50 @@
+﻿@model NewsletterBoxModel
+@using Nop.Web.Models.Newsletter;
+
+        @*<strong>@T("Newsletter.Title")</strong>*@
+    
+        <div id="newsletter-subscribe-block" class="newsletter-subscribe-block">
+            <h5>@T("Newsletter.Subscribe"):</h5>
+            <div class="newsletter-email">
+                @Html.TextBoxFor(x => x.NewsletterEmail, new { id = "newsletter-email", @class = "form-control",  placeholder="Enter email" })
+                @Html.ValidationMessageFor(x => x.NewsletterEmail)
+            </div>
+            <div class="buttons">
+                <input type="button" value="@T("Newsletter.Button")" id="newsletter-subscribe-button" class="button-1 newsletter-subscribe-button btn btn-default" />
+                <span id="subscribe-loading-progress" style="display: none;" class="please-wait">@T("Common.Wait...")</span>
+            </div>
+        </div>
+        <div id="newsletter-result-block" class="newsletter-result-block">
+        </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#newsletter-subscribe-button').click(function () {
+                
+                var email = $("#newsletter-email").val();
+                var subscribeProgress = $("#subscribe-loading-progress");
+                subscribeProgress.show();
+                $.ajax({
+                    cache: false,
+                    type: "POST",
+                    url: "@(Url.RouteUrl("SubscribeNewsletter"))",
+                    data: { "email": email },
+                    success: function (data) {
+                        subscribeProgress.hide();
+                        $("#newsletter-result-block").html(data.Result);
+                         if (data.Success) {
+                            $('#newsletter-subscribe-block').hide();
+                            $('#newsletter-result-block').show();
+                         }
+                         else {
+                            $('#newsletter-result-block').fadeIn("slow").delay(2000).fadeOut("slow");
+                         }
+                    },
+                    error:function (xhr, ajaxOptions, thrownError){
+                        alert('Failed to subscribe.');
+                        subscribeProgress.hide();
+                    }  
+                });                
+                return false;
+            });
+        });
+    </script>

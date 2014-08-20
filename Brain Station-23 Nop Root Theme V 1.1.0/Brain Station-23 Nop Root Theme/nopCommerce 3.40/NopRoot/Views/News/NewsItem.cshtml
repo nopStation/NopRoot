@@ -1,0 +1,139 @@
+﻿@model NewsItemModel
+@using Nop.Web.Models.News;
+@{
+    Layout = "~/Views/Shared/_ColumnsTwo.cshtml";
+
+    //title
+    Html.AddTitleParts(!String.IsNullOrEmpty(Model.MetaTitle) ? Model.MetaTitle : Model.Title);
+    Html.AddMetaDescriptionParts(Model.MetaDescription);
+    Html.AddMetaKeywordParts(Model.MetaKeywords);
+}
+<div class="news-item-page panel panel-default form-panel">
+    <div class="panel-heading">
+        <div class="row">
+            <div class="col-md-9">
+                <h3>@Model.Title</h3>
+            </div>
+            <div class=" col-md-3 news-date">
+                <h5><span>@Model.CreatedOn.ToString("D")</span></h5>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel-body">
+       
+        @Html.Widget("newsitem_page_before_body")
+        <div class="news-body">
+            @Html.Raw(Model.Full)
+        </div>
+        @Html.Widget("newsitem_page_before_comments")
+        @if (Model.AllowComments)
+        {
+            <div class="fieldset new-comment">
+                <div class="title">
+                    <h4>@T("News.Comments.LeaveYourComment")</h4>
+                </div>
+                @*<div class="notifications" >
+                    <div class="message-error">@Html.ValidationSummary(true)</div>
+                    @{
+                        var result = TempData["nop.news.addcomment.result"] as string;
+                    }
+                    @if (!String.IsNullOrEmpty(result))
+                    {
+                        <div class="result">@result</div>
+                    }
+                </div>*@
+                @using (Html.BeginForm())
+                {
+                    <div class="form-fields row input-comment-title">
+                        <div class="form-group inputs">
+                            @Html.LabelFor(model => model.AddNewComment.CommentTitle, new { @class = "col-md-2 control-label"}, ":")
+                            <div class="col-md-8">                            
+                                @Html.TextBoxFor(model => model.AddNewComment.CommentTitle, new { @class = "form-control"})
+                            </div>
+                            <div class="col-md-offset-2 col-md-4">  
+                                @Html.ValidationMessageFor(model => model.AddNewComment.CommentTitle)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-fields row">
+                        <div class="inputs form-group">
+                            @Html.LabelFor(model => model.AddNewComment.CommentText, new { @class = "col-md-2 control-label"}, ":")
+                            <div class="col-md-8">    
+                                @Html.TextAreaFor(model => model.AddNewComment.CommentText, new { @class = "form-control",rows="10" })
+                            </div>
+                            <div class="col-md-offset-2 col-md-4"> 
+                                @Html.ValidationMessageFor(model => model.AddNewComment.CommentText)
+                            </div>
+                        </div>
+                        @if (Model.AddNewComment.DisplayCaptcha)
+                        {
+                            <div class="captcha-box">
+                                @Html.Raw(Html.GenerateCaptcha())
+                            </div>
+                        }
+                    </div>
+                    <div class="row">
+                        <div class="col-md-offset-2 col-md-2">
+                            <div class="buttons">
+                                <input type="submit" name="add-comment" class="button-1 news-item-add-comment-button btn btn-default" value="@T("News.Comments.SubmitButton")" />
+                            </div>
+                        </div>
+                    </div>
+
+                }
+            </div>
+            if (Model.Comments.Count > 0)
+            {
+                <div class="comment-list">
+                    <div class="title">
+                        <h4>@T("News.Comments")</h4>
+                    </div>
+                    @foreach (var comment in Model.Comments)
+                    {
+                        <div class="news-comment row">
+                            <div class="comment-info col-md-3">
+                                <div class="user-info">
+                                    @if (comment.AllowViewingProfiles)
+                                    {
+                                        <a href="@Url.RouteUrl("CustomerProfile", new { id = comment.CustomerId })" class="username">@(comment.CustomerName)</a>
+                                    }
+                                    else
+                                    {
+                                        <h5><span class="username">@(comment.CustomerName)</span></h5> 
+                                    }
+                                    <div class="avatar">
+                                        @if (!String.IsNullOrEmpty(comment.CustomerAvatarUrl))
+                                        {
+                                            <img src="@(comment.CustomerAvatarUrl)" class="avatar-img" title="avatar" alt="avatar" />
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comment-content col-md-9">
+                                <div class="comment-time title mid-content-title" style="border: none">
+                                    <label>@T("News.Comments.CreatedOn"):</label>
+                                    <span class="stat-value">@comment.CreatedOn.ToString("g")</span>
+                                </div>
+                                <div class="comment-total">
+                                    <div class="comment-title">
+                                        <h4> <span class="comment-text">@comment.CommentTitle</span></h4>
+                                    </div>
+                                    <div class="comment-body">
+                                        <p class="comment-text">@Html.Raw(Nop.Core.Html.HtmlHelper.FormatText(comment.CommentText, false, true, false, false, false, false))</p>
+                                    </div>
+                                </div>
+                            </div>
+                            @Html.Widget("newsitem_page_inside_comment")
+                        </div>
+                    }
+                </div>
+            }
+        }
+        @Html.Widget("newsitem_page_after_comments")
+    </div>
+</div>
+
+
+
+

@@ -1,0 +1,28 @@
+﻿@model List<ExternalAuthenticationMethodModel>
+@using Nop.Web.Models.Customer;
+@if(Model.Count>0)
+{
+ foreach (var eam in Model)
+ {
+     <div class="row">
+         <div class="col-md-12">
+             <div class="external-authentication">
+                 <div class="offer offer-default">
+                   
+                    
+                     @Html.Action(eam.ActionName, eam.ControllerName, eam.RouteValues)
+                     
+                 </div>
+             </div>
+         </div>
+            
+     </div>
+ }
+
+}
+                @*@foreach (var eam in Model)
+                {
+                    
+                    @Html.Action(eam.ActionName, eam.ControllerName, eam.RouteValues)
+                }*@
+           

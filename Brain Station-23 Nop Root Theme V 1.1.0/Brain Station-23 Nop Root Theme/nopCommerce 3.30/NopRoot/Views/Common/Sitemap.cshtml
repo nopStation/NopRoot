@@ -1,0 +1,95 @@
+﻿@model SitemapModel
+@using Nop.Web.Models.Common;
+@{
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
+
+    //title
+    Html.AddTitleParts(T("PageTitle.Sitemap").Text);
+}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            
+            <div class="panel panel-default form-panel">
+                <div class="panel-heading">
+                    <h3>@T("Sitemap")</h3>
+                </div>
+                <div class="panel-body">
+                    @if (Model.Topics.Count > 0)
+                    {
+                        <div class="entity">
+                            <div id="legend">
+                                <legend>@T("Sitemap.Topics")</legend>
+                            </div>
+                            <div class="entity-body">
+                                @foreach (var item in Model.Topics)
+                                { 
+                                    <div class="col-md-3"><a href="@Url.RouteUrl("Topic", new { SystemName = item.SystemName.ToLowerInvariant() })">@item.Title</a></div>
+                                }
+                            </div>
+                            <div class="clearfix space20"></div>
+                            <div class="clearfix space20"></div>
+                            <div class="clearfix space20"></div>
+                        </div>
+                    }
+                    @if (Model.Categories.Count > 0)
+                    {
+                        <div class="entity">
+                            <div id="legend">
+                                <legend>@T("Sitemap.Categories")</legend>
+                            </div>
+                            <div class="entity-body">
+                    
+                                @foreach (var category in Model.Categories)
+                                { 
+                                    <div class="col-md-3"><a href="@Url.RouteUrl("Category", new { SeName = category.SeName })">@category.Name</a></div>
+                                }
+                    
+                            </div>
+                            <div class="clearfix space20"></div>
+                            <div class="clearfix space20"></div>
+                            <div class="clearfix space20"></div>
+                        </div>
+            
+                    }
+                    @if (Model.Manufacturers.Count > 0)
+                    {
+                        <div class="entity">
+                            <div id="legend">
+                                <legend>@T("Sitemap.Manufacturers")</legend>
+                            </div>
+                            <div class="entity-body">
+                                @foreach (var manufacturer in Model.Manufacturers)
+                                { 
+                                    <div class="col-md-3"><a href="@Url.RouteUrl("Manufacturer", new { SeName = manufacturer.SeName })">@manufacturer.Name</a></div>
+                                }
+                            </div>
+                            <div class="clearfix space20"></div>
+                            <div class="clearfix space20"></div>
+                            <div class="clearfix space20"></div>
+                        </div>
+                    }
+                    @if (Model.Products.Count > 0)
+                    {
+                        <div class="entity">
+                            <div id="legend">
+                                <legend>@T("Sitemap.Products")</legend>
+                            </div>
+                            <div class="entity-body">
+                                @foreach (var product in Model.Products)
+                                { 
+                                    <div class="col-md-3"><a href="@Url.RouteUrl("Product", new { SeName = product.SeName })">@product.Name</a></div>
+                                }
+                            </div>
+                            <div class="clearfix space20"></div>
+                            <div class="clearfix space20"></div>
+                            <div class="clearfix space20"></div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+

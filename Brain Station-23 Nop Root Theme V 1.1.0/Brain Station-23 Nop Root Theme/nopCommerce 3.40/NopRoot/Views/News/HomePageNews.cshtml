@@ -1,0 +1,46 @@
+﻿@model HomePageNewsItemsModel
+@using Nop.Web.Models.News;
+@if (Model.NewsItems.Count > 0)
+{
+    <div class="news-list-homepage">
+        <div class="title mid-content-title">
+            <strong>@T("News")</strong>
+        </div>
+        <div class="news-items offer offer-default">
+            @foreach (var item in Model.NewsItems)
+            {
+                <div class="item">
+                    <div class="row">
+                        <div class="col-md-6 pull-text-left">
+                            <strong><a class="news-title" href="@Url.RouteUrl("NewsItem", new { SeName = item.SeName })">
+                                        @item.Title</a></strong>
+                        </div> 
+                        
+
+                        <div class="col-md-6 pull-text-right">
+                            @item.CreatedOn.ToString("D")
+                        </div>
+
+                    </div>
+                    <br/>
+
+                    <div class="news-details">
+                        @Html.Raw(item.Short)
+                    </div>
+                    <div class="pull-text-right"><a href="@Url.RouteUrl("NewsItem", new { SeName = item.SeName })" class="read-more btn btn-default">
+                                                     @T("News.MoreInfo")</a></div>
+                </div>
+                <br/>
+
+                <legend></legend>
+
+            }
+            <div class="view-all pull-text-right">
+                <a href="@Url.RouteUrl("NewsArchive")" class="btn btn-default">
+                    @T("News.ViewAll")</a>
+            </div>
+        </div>
+    </div>
+<br/>
+
+}

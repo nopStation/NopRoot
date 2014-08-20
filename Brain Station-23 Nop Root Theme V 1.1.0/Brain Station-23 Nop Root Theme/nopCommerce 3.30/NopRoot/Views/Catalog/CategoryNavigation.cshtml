@@ -1,0 +1,83 @@
+﻿@model CategoryNavigationModel
+@using Nop.Web.Models.Catalog;
+
+@functions{
+    public bool BreadCrumbContainsCurrentCategoryId(CategorySimpleModel category)
+    {
+        if (Model.CurrentCategoryId == 0)
+            return false;
+
+        if (category.Id == Model.CurrentCategoryId)
+            return true;
+
+        foreach (var subCategory in category.SubCategories)
+        {
+            if (BreadCrumbContainsCurrentCategoryId(subCategory))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+}
+@helper RenderCategoryLine(CategorySimpleModel category)
+{       
+        <div class="panel-heading">
+            <p class="panel-title">
+                <i class="fa fa-angle-right"></i>&nbsp;<a href="@Url.RouteUrl("Category", new { SeName = category.SeName })" >@category.Name
+                    @if (category.NumberOfProducts.HasValue)
+                    {
+                        <span class="op-number">@if(category.NumberOfProducts<=9)
+                                                {
+                                                    @:0@(category.NumberOfProducts.Value)
+                                                }else
+                                                {
+                                                   @(category.NumberOfProducts.Value)
+                                                }</span>
+                    }
+                </a>
+            </p>
+        </div>
+        
+            if (category.Id == Model.CurrentCategoryId ||
+                category.SubCategories.Count(BreadCrumbContainsCurrentCategoryId) > 0)
+            {
+                if (category.SubCategories.Count > 0)
+                {
+            
+                    <div id="collapseOne" class="panel-collapse collapse in">
+                        
+                
+                            @foreach (var subCategory in category.SubCategories)
+                            {
+                                @RenderCategoryLine(subCategory)
+                            }
+                
+                    </div>
+                }
+            }
+        
+}
+@if (Model.Categories.Count > 0)
+{
+    <div class="panel panel-default side-nav side-nav-category">
+        <div class="panel-heading">
+            <strong>@T("Categories")</strong>
+        </div>
+        <div class="panel-body">
+            <div class="panel-group" id="accordion">
+                @foreach (var category in Model.Categories)
+                {
+                    <div class="panel panel-default">
+                        
+                        @RenderCategoryLine(category)
+                        
+                    </div>
+                }
+            </div>
+            
+        </div>
+        
+    </div>
+}
