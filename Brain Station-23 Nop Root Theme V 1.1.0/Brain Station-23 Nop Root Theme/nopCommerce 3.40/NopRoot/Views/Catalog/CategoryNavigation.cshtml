@@ -25,7 +25,7 @@
 {       
         <div class="panel-heading">
             <p class="panel-title">
-                <i class="fa fa-angle-right"></i>&nbsp;<a href="@Url.RouteUrl("Category", new { SeName = category.SeName })" >@category.Name
+                <i class="fa fa-caret-right"></i>&nbsp;<a href="@Url.RouteUrl("Category", new { SeName = category.SeName })" >@category.Name
                     @if (category.NumberOfProducts.HasValue)
                     {
                         <span class="op-number">@if(category.NumberOfProducts<=9)

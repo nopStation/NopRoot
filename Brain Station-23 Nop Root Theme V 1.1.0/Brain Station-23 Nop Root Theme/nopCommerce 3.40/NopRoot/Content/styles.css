@@ -906,13 +906,6 @@ div#color-options h4 {
 margin-left: 10%;
 }
 
-
-.filterSpecs {
-    max-height: 280px;
-    overflow-y: auto;
+#accordion .collapse{
+    padding-left:12px;
 }
-
-.filterTitle {
-   background-color: #F0F0F0; display: block; padding: 5px 5px;
-}
-
