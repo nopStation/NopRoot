@@ -1,0 +1,95 @@
+﻿@model ActiveDiscussionsModel
+@using Nop.Web.Extensions;
+@using Nop.Web.Models.Boards;
+<div class="title mid-content-title">
+    <div class="row">
+        <div class="col-md-10 pull-text-left">
+            <span><h4><strong>@T("Forum.ActiveDiscussions")</strong></h4></span>        
+        </div>
+        <div class="col-md-12 pull-text-right">
+            <span>
+                @if (Model.ActiveDiscussionsFeedEnabled)
+                {
+                    <a href="@Url.RouteUrl("ActiveDiscussionsRSS")" class="pull-right header-rss" title="@T("Forum.ActiveDiscussionsRSSLinkTitle")"><i class="fa fa-rss fa-2x header-rss-icon"></i></a>
+                }
+                @if (Model.ViewAllLinkEnabled)
+                {        
+                @*@Html.RouteLink(T("Forum.ActiveDiscussions.ViewAll").Text, "ActiveDiscussions", null, new { @class = "view-all" })*@
+                }
+
+
+            </span>
+        
+        </div>
+
+    </div>
+    
+    
+</div>
+
+
+<div class="forums-table-section topics-group active-discussions offer offer-default">
+    
+    <div class="forums-table-section-body table-responsive">
+        @if (Model.ForumTopics.Count > 0)
+        {
+            <table class="table table-striped  table-hover table-condensed">
+                <thead>
+                    <tr>
+                        <th class="topic-name">
+                            @T("Forum.TopicTitle")
+                        </th>
+                        <th class="replies text-center">
+                            @T("Forum.Replies")
+                        </th>
+                        <th class="views text-center">
+                            @T("Forum.Views")
+                        </th>
+                        <th class="last-post text-center">
+                            @T("Forum.LatestPost")
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var topic in Model.ForumTopics)
+                    {
+                        <tr>
+                            <td class="topic-name">
+                               <strong> @Html.RouteLink(topic.Subject, "TopicSlug", new { id = topic.Id, slug = topic.SeName }, new { @class = "topic-title" })</strong>
+                                @if (topic.NumPosts > Model.PostsPageSize)
+                                {
+                                    <div class="topicspager">
+                                        @Html.ForumTopicSmallPager(topic)
+                                    </div>
+                                }
+                                <div class="topic-starter">
+                                    @if (topic.CustomerId > 0)
+                                    {
+                                        <label>@T("Forum.Author"):</label>
+                                        if (topic.AllowViewingProfiles && !topic.IsCustomerGuest)
+                                        {
+                                        @Html.RouteLink(topic.CustomerName, "CustomerProfile", new { Id = topic.CustomerId })
+                                        }
+                                        else
+                                        {
+                                        @topic.CustomerName
+                                        }
+                                    }
+                                </div>
+                            </td>
+                            <td class="replies text-center">
+                                @topic.NumReplies
+                            </td>
+                            <td class="views text-center">
+                                @topic.Views
+                            </td>
+                            <td class="last-post text-center">
+                                @Html.Action("LastPost", new { forumPostId = topic.LastPostId, showTopic = false })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</div>
