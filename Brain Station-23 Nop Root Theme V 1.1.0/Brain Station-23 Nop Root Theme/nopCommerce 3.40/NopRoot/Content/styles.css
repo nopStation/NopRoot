@@ -336,6 +336,47 @@ Page: One Page Shopping Cart  START
 \*------------------------------------*/
 
 .tab-section .step .box-content { padding: 15px; }
+
+.noproot-opc-payment-info select {
+color: #696763;
+border-radius: 0;
+resize: none;
+background: #F0F0E9;
+border: 0 none;
+margin-bottom: 10px;
+padding: 10px;
+width: 100%;
+font-weight: 300;
+}
+.noproot-opc-payment-info select#ExpireMonth{ width: 70px;}
+.noproot-opc-payment-info select#ExpireYear{ width: 80px;}
+.noproot-opc-payment-info input#CardholderName{color: #696763;
+border-radius: 0;
+resize: none;
+background: #F0F0E9;
+border: 0 none;
+margin-bottom: 10px;
+padding: 10px;
+width: 100%;
+font-weight: 300;}
+  .noproot-opc-payment-info input#CardNumber{ color: #696763;
+border-radius: 0;
+resize: none;
+background: #F0F0E9;
+border: 0 none;
+margin-bottom: 10px;
+padding: 10px;
+width: 100%;
+font-weight: 300;}
+.noproot-opc-payment-info input#CardCode{ color: #696763;
+border-radius: 0;
+resize: none;
+background: #F0F0E9;
+border: 0 none;
+margin-bottom: 10px;
+padding: 10px;
+width: 100%;
+font-weight: 300;}
 /*------------------------------------*\
 Page: One Page Shopping Cart  END
 \*------------------------------------*/
@@ -908,4 +949,8 @@ margin-left: 10%;
 
 #accordion .collapse{
     padding-left:12px;
+}
+
+.pull-text-right {
+    text-align: right;
 }
