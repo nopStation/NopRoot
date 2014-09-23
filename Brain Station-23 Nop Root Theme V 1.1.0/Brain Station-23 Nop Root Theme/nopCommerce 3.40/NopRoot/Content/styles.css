@@ -954,3 +954,7 @@ margin-left: 10%;
 .pull-text-right {
     text-align: right;
 }
+
+.page.category-page .item-box .offer-default {
+    height: 200px;
+}
