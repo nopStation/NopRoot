@@ -7,16 +7,14 @@
             <div class="col-md-3 post-info">
                 <div class="manage">
                     @if (Model.IsCurrentCustomerAllowedToEditPost)
-                    {                
-                       <a class="btn btn-default" href="@Url.RouteUrl("TopicEdit", new { id = Model.Id })"><i class="fa fa-edit"></i>&nbsp; @T("Forum.EditTopic")</a>
+                    {
+                        @Html.RouteLink(T("Forum.EditPost").Text, "PostEdit", new { id = Model.Id }, new { @class = "edit-post-link-button" })
                     }
                     @if (Model.IsCurrentCustomerAllowedToDeletePost)
                     {
-                        <a class="btn btn-default" href="@Url.RouteUrl("TopicDelete", new { id = Model.Id })" onclick="@(String.Format(" return confirm('{0}');", T("common.areyousure").Text))">
-                            <i class="fa fa fa-trash-o"></i>&nbsp; @T("Forum.DeleteTopic")
-                        </a>    
+                        @Html.RouteLink(T("Forum.DeletePost").Text, "PostDelete", new { id = Model.Id }, new { onClick = String.Format("return confirm('{0}');", T("Common.AreYouSure").Text), @class = "delete-post-link-button" })
                     }
-                </div>      
+                </div>       
                 <div class="user-info">
                     @if (Model.CustomerId > 0)
                     {
