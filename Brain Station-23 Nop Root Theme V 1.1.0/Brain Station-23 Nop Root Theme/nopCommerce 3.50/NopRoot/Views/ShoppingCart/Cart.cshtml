@@ -1,0 +1,131 @@
+﻿@model ShoppingCartModel
+@using Nop.Web.Models.Checkout
+@using Nop.Web.Models.ShoppingCart;
+@{
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
+
+    //title
+    Html.AddTitleParts(T("PageTitle.ShoppingCart").Text);
+}
+@if (!Model.OnePageCheckoutEnabled)
+{
+    @Html.Action("CheckoutProgress", "Checkout", new {step = CheckoutProgressStep.Cart})
+}else
+{
+            <div class="container">
+    <div class="row">
+
+        <!-- <img src="~/Themes/BSNopFlaty/Content/services.png" />-->
+
+        <!-- Rectangle Banners -->
+        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6">
+            
+            <div class="rec-banner active_position ">        
+            
+                    
+                <div class="banner pull-text-center">
+                
+                    <h4><a>
+                            <div><i class="fa fa-shopping-cart fa-2x"></i></div>@T("Checkout.Progress.Cart")
+                        </a>
+
+                    </h4>
+                
+                </div>
+                    
+            
+            </div>        
+            
+        </div>
+
+
+
+        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6">
+            <div class="rec-banner deactive_position">        
+            
+            
+                <div class="banner pull-text-center">
+                
+                    <h4><a><div><i class="fa fa-map-marker fa-2x"></i></div>@T("Checkout.Progress.Address")</a></h4>
+                
+                </div>
+            </div>        
+            
+        </div>
+
+        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6">
+            <div class="rec-banner deactive_position">        
+            
+                <div class="banner pull-text-center">
+                
+                    <h4><a ><div><i class="fa fa-truck fa-2x"></i></div>@T("Checkout.Progress.Shipping")</a></h4>
+                    <p></p>
+                </div>
+            </div>        
+            
+        </div>
+
+        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6">
+            <div class="rec-banner deactive_position">        
+            
+                <div class="banner pull-text-center">
+            
+                    <h4><a><div><i class="fa fa-credit-card fa-2x"></i></div>@T("Checkout.Progress.Payment")</a></h4>
+                
+                </div>
+            </div>        
+            
+        </div>
+
+        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6">
+            <div class="rec-banner deactive_position">        
+            
+                <div class="banner pull-text-center">
+            
+                    <h4><a ><div><i class="fa fa-thumbs-up fa-2x"></i></div>@T("Checkout.Progress.Confirm")</a></h4>
+                
+                </div>
+            </div>        
+            
+        </div>
+
+
+        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6">
+            <div class="rec-banner deactive_position">        
+            
+                <div class="banner pull-text-center">
+                
+                    <h4><a ><div><i class="fa fa-check fa-2x"></i></div>@T("Checkout.Progress.Complete")</a></h4>
+                
+
+                </div>
+            </div>        
+            
+        </div>
+
+
+
+        <!-- end: Rectangle Banners -->
+    </div>
+    <br/>
+</div>
+}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default form-panel">
+                <div class="panel-heading">
+                    <h3>@T("ShoppingCart")</h3>
+                </div>
+                <div class="panel-body">
+                    @Html.Partial("OrderSummary", Model)
+                </div>
+            </div>
+
+            
+        </div>
+        
+    </div>
+    
+</div>
+

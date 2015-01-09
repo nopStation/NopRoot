@@ -1,0 +1,231 @@
+﻿@model ForumPageModel
+@using Nop.Core.Domain.Forums;
+@using Nop.Web.Extensions;
+@using Nop.Web.Models.Boards;
+@using Nop.Web.Models.Common;
+@{
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
+
+    Html.AddTitleParts(Model.Name);
+}
+<script type="text/javascript">
+    function handleForumWatch(context) {
+        $('#watch-forum').text(context.Text);
+    }
+</script>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-9">
+            @Html.Action("ForumBreadcrumb", new { forumId = Model.Id })
+        </div>
+     
+        <div class="col-md-3">
+            @Html.Partial("_SearchBox")
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default form-panel">
+                <div class="panel-heading">
+                    <h3>@Model.Name</h3>
+                    <span>
+                        @if (Model.ForumFeedsEnabled)
+                        {
+                            <a href="@Url.RouteUrl("ForumRSS", new { id = Model.Id })" class="pull-right header-rss" title="@T("Forum.ForumRSSLinkTitle")"><i class="fa fa-rss fa-2x header-rss-icon"></i></a>
+                        }
+                    </span>
+                </div>
+
+                <div class="panel-body">
+                    <p>@Model.Description</p>
+                </div>
+
+            </div>
+            
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="title mid-content-title pull-text-right">
+                <a class="btn btn-default" href="@Url.RouteUrl("TopicCreate", new { id = Model.Id })"><i class="fa fa-plus-square"></i>&nbsp; @T("Forum.NewTopic")</a>
+               @if (Model.IsCustomerAllowedToSubscribe)
+                {
+                    <a class="btn btn-default" href="#" id="watch-forum"><i class="fa fa-eye"></i>&nbsp;@Model.WatchForumText</a>
+                    <script type="text/javascript">
+                                        $(function () {
+                                            $('#watch-forum').click(function () {
+                                                $.ajax({
+                                                    cache: false,
+                                                    type: 'POST',
+                                                    url: '@Url.RouteUrl("ForumWatch", new { id = Model.Id })',
+                                                    dataType: 'json',
+                                                    success: function (data) {
+                                                        $('#watch-forum').text(data.Text);
+                                                    },
+                                                    error: function (xhr, ajaxOptions, thrownError) {
+                                                        alert('Failed to watch');
+                                                    }
+                                                });
+                                            });
+                                        });
+                    </script>
+                }
+            </div>
+
+
+
+        </div>
+            
+    </div>
+
+</div>
+
+
+
+
+
+<div @*class="page forum-page panel panel-default form-panel"*@>
+    
+
+    
+
+
+    <div class="container">
+        
+
+
+        <div class=" upper">
+            @{
+                var pager = Html.Pager(new PagerModel()
+                                           {
+                                               PageSize = Model.TopicPageSize,
+                                               TotalRecords = Model.TopicTotalRecords,
+                                               PageIndex = Model.TopicPageIndex,
+                                               ShowTotalSummary = false,
+                                               RouteActionName = "ForumSlugPaged",
+                                               UseRouteLinks = true,
+                                               RouteValues = new RouteValues { id = Model.Id, slug = Model.SeName }
+                                           });
+            }
+            @pager
+        </div>
+    </div>
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="forums-table-section topics-group offer offer-default">
+                    <div class="forums-table-section-body table-responsive">
+                        @if (Model.ForumTopics.Count > 0)
+                        {
+                            <table class="table table-striped  table-hover table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th class="topic-name" colspan="2">
+                                            @T("Forum.TopicTitle")
+                                        </th>
+                                        <th class="replies text-center">
+                                            @T("Forum.Replies")
+                                        </th>
+                                        <th class="views text-center">
+                                            @T("Forum.Views")
+                                        </th>
+                                        <th class="last-post text-center">
+                                            @T("Forum.LatestPost")
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var topic in @Model.ForumTopics)
+                                    {
+                                        <tr>
+                                            <td class="image">
+                                                @{
+                                                    var topicType = "post";
+                                                    var topicText = String.Empty;
+                                                    switch (topic.ForumTopicType)
+                                                    {
+                                                        case ForumTopicType.Normal:
+                                                            topicType = "post";
+                                                            break;
+                                                        case ForumTopicType.Sticky:
+                                                            topicType = "poststicky";
+                                                            topicText = string.Format("[{0}]", T("Forum.Sticky").ToString());
+                                                            break;
+                                                        case ForumTopicType.Announcement:
+                                                            topicType = "post-annoucement";
+                                                            topicText = string.Format("[{0}]", T("Forum.Announcement").ToString());
+                                                            break;
+                                                        default:
+                                                            topicType = "post";
+                                                            break;
+                                                    }
+                                                    <div class="@topicType">
+                                                    </div>
+                                                }
+                                            </td>
+                                            <td class="topic-name">
+                                                @if (!String.IsNullOrEmpty(topicText))
+                                                {
+                                                    <span class="topic-type">@topicText</span>
+                                                }
+                                                <strong> @Html.RouteLink(topic.Subject, "TopicSlug", new { id = topic.Id, slug = topic.SeName }, new { @class = "topic-title" })</strong>
+                                                @if (topic.NumPosts > Model.PostsPageSize)
+                                                {
+                                                    <div class="topicspager">
+                                                        @Html.ForumTopicSmallPager(topic)
+                                                    </div>
+                                                }
+                                                <div class="topic-starter">
+                                                    @if (topic.CustomerId > 0)
+                                                    {
+                                                        <label>@T("Forum.Author"):</label>
+                                                        if (topic.AllowViewingProfiles && !topic.IsCustomerGuest)
+                                                        {
+                                                            @Html.RouteLink(topic.CustomerName, "CustomerProfile", new { Id = topic.CustomerId })
+                                                        }
+                                                        else
+                                                        {
+                                                            @topic.CustomerName
+                                                        }
+                                                    }
+                                                </div>
+                                            </td>
+                                            <td class="replies text-center">
+                                                @topic.NumReplies
+                                            </td>
+                                            <td class="views text-center">
+                                                @topic.Views
+                                            </td>
+                                            <td class="last-post text-center">
+                                                @Html.Action("LastPost", new { forumPostId = topic.LastPostId, showTopic = false })
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">        
+        <div class="row">
+            <div class="col-md-12">
+                <div class="pager lower">
+                    @pager
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

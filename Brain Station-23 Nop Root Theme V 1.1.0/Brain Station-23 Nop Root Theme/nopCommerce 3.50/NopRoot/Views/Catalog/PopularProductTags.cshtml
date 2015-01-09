@@ -1,0 +1,27 @@
+﻿@model PopularProductTagsModel
+@using Nop.Web.Models.Catalog;
+@if (Model.Tags.Count > 0)
+{
+    <div class="block-popular-tags panel panel-default side-nav">
+        <div class="panel-heading">
+            <strong>@T("Products.Tags.Popular")</strong>
+        </div>
+        <div class="listbox panel-body">
+            <div class="tags">
+                
+                    @foreach (var item in Model.Tags)
+                    {
+                        <a href="@Url.RouteUrl("ProductsByTag", new { productTagId = item.Id, SeName = item.SeName })" style="font-size:@(Model.GetFontSize(item))%;">@item.Name</a>
+                        
+                    }
+                
+            </div>
+            @if (Model.TotalTags > Model.Tags.Count)
+            {
+                <div class="view-all">
+                    <a href="@Url.RouteUrl("ProductTagsAll")" class="btn btn-sm btn-default">@T("Products.Tags.Popular.ViewAll")</a>
+                </div>
+            }
+        </div>
+    </div>
+}

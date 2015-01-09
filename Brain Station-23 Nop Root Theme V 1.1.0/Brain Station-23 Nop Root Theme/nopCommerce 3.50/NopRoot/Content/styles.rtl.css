@@ -1,0 +1,79 @@
+﻿.col-md-3.layout-left{padding: 0 0px 0 30px;}
+.col-md-3.layout-right{padding: 0 30px 0 0px;}
+.masthead .navbar-inverse .navbar-nav > li > a {border-left: 1px solid #2b2b2b; border-right:none;}
+.navbar-fixed-top.top-menu {right: 0;}
+
+@media (min-width: 768px) {
+    .nav-justified > li > a {border-right: 1px solid #fff;border-left: 1px solid #d5d5d5;}
+    .nav-justified > li:first-child > a {border-right: 0; border-radius: 5px 5px 0 0px;}
+    .nav-justified > li:last-child > a {border-radius: 0 0px 5px 5px;border-right: 0;}
+}
+.header-logo {float: right;text-align: right;}
+div.panel-body > div.poll > ul.poll-options{padding:4px 10px 0px 0px;}
+.panel-body > .tags{padding:5px 10px 10px 5px;}
+div.block-popular-tags div.view-all{padding:0px 10px 10px 0px ;}
+.home-page-best-seller .rating { margin-right: 32%; }
+
+.footer .getintouch div.c-info {padding-right: 10px;}
+.footer .social-icons ul li {margin-left: 1px;float: right;}
+.footer .copyrights .payment-icons {float: left;}
+.footer .copyrights .payment-icons a {padding-right: 10px;}
+.footer .copyrights .btmlinks {padding-right: 20px;}
+
+.picture.thumbnail{margin:5px 10px 0 0px;}
+.product-list .picture, .product-list.home-page-product-list .picture{float: right;}
+.product-list .middle-content{float: right;}
+.product-list.home-page-product-list .middle-content{float: right;}
+.product-list .add-info, .product-list.home-page-product-list .add-info{float: left;}
+.product-grid > .offer.offer-default {float: right;}
+.sub-category-grid .offer.offer-default{float:right;}
+.panel-body table tr td { padding-right: 15px }
+
+/*Start*/
+.address-item .left{padding-right:40px;}
+.alignright {text-align: left;}
+.pull-text-right {text-align: left;}
+.pull-text-left{text-align: right;}
+.home-page-product-grid .rating {margin-right: 32%;}
+.op-number {float: left;}
+.notifications {right: 0;}
+/*------------------------------------*\
+  Page: Blog START + News START
+\*------------------------------------*/
+.paddding-right0{padding-left: 0px;}
+.paddding-left0{padding-right: 0px;}
+.blogpost-page .tags{padding-right: 0px;}
+.header-rss {margin-left: 12px;}
+/*------------------------------------*\
+  Page: Forum START
+\*------------------------------------*/
+.forums-table-section .forums-table-section-body .forum-name, .forums-table-section .forums-table-section-body .topic-name {padding-right: 20px;}
+/*------------------------------------*\
+  Page: Product Details START
+\*------------------------------------*/
+.product-details-page .gallery .picture-thumbs a{margin-left:3px;}
+.product-details-page .free-shipping {background: url('images/free-shipping.png') right 0px no-repeat;padding:18px 4px 0 5px;}
+.product-details-page .full-description ul,.product-details-page .full-description ol{margin-right:25px;}
+.product-details-page .email-a-friend{margin:10px 0px 10px 5px;float:right;}
+.product-details-page .compare-products{float:right;}
+.product-details-page .product-reviews-overview .product-review-box{margin-left:5px;}
+.rating div{float:right;}
+.product-details-page .product-variant-list .add-to-cart-button{margin-right:0;}
+.product-details-page .variant-picture{float:right;}
+.product-details-page .variant-overview{float:right;}
+.product-details-page .product-variant-line .prices{/*float:left;*/margin-left:30px;}
+.product-details-page .giftcard dt{clear:right;float:right;}
+.related-products-grid .title,.also-purchased-products-grid .title{text-align:right;}
+.product-specs-box .data-table td{ padding-right: 0px;}
+.product-specs-box .title{text-align:right;}
+.product-tags-box .title{text-align:right;}
+.product-tags-box .product-tags-list ul { padding-right : 0px; margin-right : 0px;}
+.product-tags-box .product-tags-list li{float:right;padding-right:5px;}
+.remove_left_padding{padding-right: 0px;}
+.remove_right_padding{padding-left: 0px;}
+.add_left_padding{padding-right: 15px;}
+/*------------------------------------*\
+  Product view START
+\*------------------------------------*/
+.product-list .add-info, .product-list.home-page-product-list .add-info{text-align:left;}
+.product-grid .add-info{right: 0;}

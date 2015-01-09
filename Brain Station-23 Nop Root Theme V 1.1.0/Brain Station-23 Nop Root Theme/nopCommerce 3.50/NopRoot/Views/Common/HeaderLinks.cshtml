@@ -1,0 +1,111 @@
+﻿@model HeaderLinksModel
+@using Nop.Web.Models.Common;
+
+
+@*@Html.Action("Index","SideMenu",new { area = "" })*@
+    
+<ul  class="nav navbar-nav navbar-right">
+    @Html.Widget("header_links_before")
+    @Html.Action("AdminHeaderLinks", "Common")
+    @if (Model.IsAuthenticated)
+    {
+        <li><a href="@Url.RouteUrl("CustomerInfo")" class="account">@Model.CustomerEmailUsername</a></li>
+        <li><a href="@Url.RouteUrl("Logout")" class="ico-logout">@T("Account.Logout")</a></li>
+    }
+    else
+    {
+        <li><a href="@Url.RouteUrl("Register")" class="ico-register">@T("Account.Register")</a></li>
+        <li><a href="@Url.RouteUrl("Login")" class="ico-login">@T("Account.Login")</a></li>
+    }
+    @if (Model.AllowPrivateMessages)
+    {
+        <li><a href="@Url.RouteUrl("PrivateMessages", new { tab = "" })" class="ico-inbox">@T("PrivateMessages.Inbox") <span class="unread-private-messages">@Model.UnreadPrivateMessages</span> </a>
+           </li>
+        if (!string.IsNullOrEmpty(Model.AlertMessage))
+        {
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $('#notificationModal').modal('show');
+                });
+            </script>
+        }
+    }
+    @if (Model.ShoppingCartEnabled)
+    {
+			<li id="topcartlink" class="dropdown">
+				<a href="@Url.RouteUrl("ShoppingCart")" class="ico-cart hidden-md hidden-lg">
+					<span class="cart-label">@T("ShoppingCart")</span>
+					<span class="cart-qty">@T("ShoppingCart.HeaderQuantity", Model.ShoppingCartItems)</span>
+                    
+
+				</a>
+        
+                @if (!String.IsNullOrWhiteSpace(@Html.Action("FlyoutShoppingCart", "ShoppingCart").ToString()))
+				{
+					<a href="@Url.RouteUrl("ShoppingCart")" class="ico-cart dropdown-toggle visible-md visible-lg" data-toggle="dropdown" data-hover="dropdown">
+						<span class="cart-label">@T("ShoppingCart")</span>
+						<span class="cart-qty">@T("ShoppingCart.HeaderQuantity", Model.ShoppingCartItems)</span>
+						<i class="fa fa-angle-down"></i>
+
+					</a>
+
+
+                
+					<ul class="dropdown-menu">
+						<li>@Html.Action("FlyoutShoppingCart", "ShoppingCart")</li>
+                    
+					</ul>
+
+
+				}else
+								{
+									<a href="@Url.RouteUrl("ShoppingCart")" class="ico-cart">
+										<span class="cart-label">@T("ShoppingCart")</span>
+										<span class="cart-qty">@T("ShoppingCart.HeaderQuantity", Model.ShoppingCartItems)</span>
+                    
+
+									</a>
+
+								}
+
+				
+			</li>
+
+    }
+    @if (Model.WishlistEnabled)
+    {
+        <li>
+            <a href="@Url.RouteUrl("Wishlist")" class="ico-wishlist">
+                <span class="cart-label">@T("Wishlist")</span>
+                <span class="wishlist-qty">@T("Wishlist.HeaderQuantity", Model.WishlistItems)</span>
+            </a>
+        </li>
+    }
+    <li>
+        @Html.Action("TaxTypeSelector", "Common")
+    </li>
+    <li>
+        @Html.Action("CurrencySelector", "Common")
+    </li>
+    <li>
+        @Html.Action("LanguageSelector", "Common")
+    </li>
+        
+    @Html.Widget("header_links_after")
+</ul>
+
+
+@*Notification window*@
+<div class="modal fade" id="notificationModal" tabindex="-1" role="dialog" aria-labelledby="notificationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="notificationModalLabel">@T("Common.Notification")</h4>
+            </div>
+            <div class="modal-body">
+                @Html.Raw(HttpUtility.JavaScriptStringEncode(Model.AlertMessage))
+            </div>
+        </div>
+    </div>
+</div>

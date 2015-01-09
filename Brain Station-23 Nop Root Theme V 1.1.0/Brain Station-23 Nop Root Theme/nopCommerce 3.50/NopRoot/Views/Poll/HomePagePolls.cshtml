@@ -1,0 +1,26 @@
+﻿@model IList<PollModel>
+@using Nop.Web.Models.Polls;
+@if (Model.Count > 0)
+{
+    <div class="title mid-content-title">
+        <strong>@T("Polls.Title")</strong>
+    </div>
+
+    <div class="offer offer-default">
+        @{
+            var i = 0;
+        }
+            @foreach (var poll in Model)
+            {   
+                @Html.Partial("_Poll", poll)
+                if(i!=0)
+                {
+                    @:<legend></legend>
+                }
+                i++;
+            }
+            
+        
+    </div>
+
+}

@@ -1,0 +1,64 @@
+﻿@model PrivateMessageModel
+@using Nop.Web.Models.PrivateMessages;
+@{
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
+
+    Html.AddTitleParts(T("PageTitle.ViewPM").Text);
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page forum-edit-page">
+                <div class="panel panel-default form-panel">
+                    <div class="panel-heading">
+                        <h1>@T("PrivateMessages.View.ViewMessage")</h1>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label>@T("PrivateMessages.View.From")</label>
+                            </div>
+                            <div class="col-md-6">
+                                <span>@Model.CustomerFromName</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label>@T("PrivateMessages.View.To")</label>
+                            </div>
+                            <div class="col-md-6">
+                                <span>@Model.CustomerToName</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label>@T("PrivateMessages.View.Subject")</label>
+                            </div>
+                            <div class="col-md-6">
+                                <span>@Model.Subject</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label>@T("PrivateMessages.View.Message")</label>
+                            </div>
+                            <div class="col-md-6">
+                                <span>@Html.Raw(Model.Message)</span>
+                            </div>
+                        </div>
+                        <div class="button">
+                            <input type="button" class="button-2 submit-topic-button btn btn-default" value="@T("PrivateMessages.View.ReplyButton")"
+                                   onclick="setLocation('@Url.RouteUrl("SendPMReply", new { toCustomerId = Model.FromCustomerId, replyToMessageId = Model.Id })')" />
+                            <input type="button" class="button-2 submit-topic-button btn btn-default" value="@T("PrivateMessages.View.DeleteButton")"
+                                   onclick="setLocation('@Url.RouteUrl("DeletePM", new { privateMessageId = Model.Id })')" />
+                            <input type="button" class="button-2 submit-topic-button btn btn-default" value="@T("PrivateMessages.View.BackButton")"
+                                   onclick="setLocation('@Url.RouteUrl("PrivateMessages")')" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+       </div>
+    </div>
+</div>
+                        

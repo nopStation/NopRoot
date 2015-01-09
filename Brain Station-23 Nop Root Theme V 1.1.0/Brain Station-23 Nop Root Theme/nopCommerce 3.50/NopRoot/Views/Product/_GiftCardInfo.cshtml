@@ -1,0 +1,53 @@
+﻿@model ProductDetailsModel.GiftCardModel
+@using Nop.Web.Models.Catalog;
+@if (Model.IsGiftCard)
+{
+    <div class="giftcard">
+        <div class="form-group row">
+            <div class="col-md-4">
+                 @Html.LabelFor(model => model.RecipientName, new { }, ":")               
+            </div>
+            <div class="col-md-8">
+                @Html.TextBoxFor(model => model.RecipientName, new { @class = "recipient-name form-control" })
+            </div>
+        </div>
+        @if (Model.GiftCardType == Nop.Core.Domain.Catalog.GiftCardType.Virtual)
+        {
+            <div class="form-group row">
+                <div class="col-md-4">
+                    @Html.LabelFor(model => model.RecipientEmail, new { }, ":")           
+                </div>
+                <div class="col-md-8">
+                    @Html.TextBoxFor(model => model.RecipientEmail, new { @class = "recipient-email form-control" })
+                </div>
+            </div>
+        }
+        <div class="form-group row">
+                <div class="col-md-4">
+                    @Html.LabelFor(model => model.SenderName, new { }, ":")         
+                </div>
+                <div class="col-md-8">
+                    @Html.TextBoxFor(model => model.SenderName, new { @class = "sender-name form-control" })
+                </div>
+            </div>
+        @if (Model.GiftCardType == Nop.Core.Domain.Catalog.GiftCardType.Virtual)
+        {
+            <div class="form-group row">
+                <div class="col-md-4">
+                    @Html.LabelFor(model => model.SenderEmail, new { }, ":")        
+                </div>
+                <div class="col-md-8">
+                    @Html.TextBoxFor(model => model.SenderEmail, new { @class = "sender-email form-control" })
+                </div>
+            </div>
+        }
+        <div class="form-group row">
+                <div class="col-md-4">
+                    @Html.LabelFor(model => model.Message, new { }, ":")     
+                </div>
+                <div class="col-md-8">
+                    @Html.TextAreaFor(model => model.Message, new { @class = "form-control", rows="5",cols="2" })
+                </div>
+            </div>
+    </div>
+}

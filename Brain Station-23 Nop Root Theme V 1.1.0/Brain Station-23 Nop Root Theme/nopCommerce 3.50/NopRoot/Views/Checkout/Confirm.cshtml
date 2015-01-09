@@ -1,0 +1,154 @@
+﻿@model CheckoutConfirmModel
+@using Nop.Web.Models.Checkout;
+@{
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
+
+    //title
+    Html.AddTitleParts(T("PageTitle.Checkout").Text);
+}
+
+@Html.Action("CheckoutProgress", "Checkout", new { step = CheckoutProgressStep.Confirm })
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            
+       
+
+<div class="panel panel-default form-panel">
+    <div class="panel-heading">
+        <h3>@T("Checkout.ConfirmYourOrder")</h3>
+    </div>
+    <div class="panel-body">
+        
+        <div class="row">
+        
+            <div class="col-lg-12 box-block">
+                <div class="box-heading">
+                    <h4>@T("Checkout.OrderSummary")</h4>
+                </div>
+
+                <div class="box-content">
+                    @Html.Action("OrderSummary", "ShoppingCart", new { prepareAndDisplayOrderReviewData = true })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            
+                
+
+
+
+            <div class="col-lg-12 cart-box-wr">
+                    
+
+                <div class="coupon-box ">
+                            
+    
+                    <div class="hint">
+                        @using (Html.BeginRouteForm("CheckoutConfirm", FormMethod.Post, new { id = "confirm-order-form" }))
+                        {
+                            <script type="text/javascript">
+                                $(document).ready(function () {
+                                    $('.confirm-order-next-step-button').click(function () {
+                                        //terms of service
+                                        var termOfServiceOk = true;
+                                        if ($('#termsofservice').length > 0) {
+                                            //terms of service element exists
+                                            if (!$('#termsofservice').is(':checked')) {
+                                                $("#terms-of-service-warning-box").dialog();
+                                                termOfServiceOk = false;
+                                            } else {
+                                                termOfServiceOk = true;
+                                            }
+                                        }
+                                        if (termOfServiceOk) {
+                                            //$('#confirm-order-form').submit();
+                                            //$('.confirm-order-next-step-button').attr('disabled', 'disabled');
+                                            return true;
+                                        } else {
+                                            return false;
+                                        }
+                                    });
+                                });
+                            </script>
+                            if (!String.IsNullOrEmpty(Model.MinOrderTotalWarning))
+                            {
+                                <div class="alert alert-danger">@Model.MinOrderTotalWarning</div>
+                            }
+                            else
+                            {
+                                if (Model.TermsOfServiceOnOrderConfirmPage)
+																{                               <div class="offer offer-default">
+																																	<div class="pull-left ">
+
+																																		<div id="terms-of-service-warning-box" title='@T("Checkout.TermsOfService")' style="display:none;">
+																																			<p>@T("Checkout.TermsOfService.PleaseAccept")</p>
+																																		</div>
+
+																																		<div class="terms-of-service">
+																																			<input id="termsofservice" type="checkbox" name="termsofservice" />
+																																			@T("Checkout.TermsOfService.IAccept")
+																																			<a class="read" onclick="javascript:OpenWindow('@Url.RouteUrl("TopicPopup", new { SystemName = "conditionsofUse" })', 450, 500, true);">@T("Checkout.TermsOfService.Read")</a>
+																																		</div>
+																																	</div>
+
+																																	<div class=" pull-right">
+																																		<input type="submit" name="nextstep" value="@T("Checkout.ConfirmButton")" class="btn btn-default confirm-order-next-step-button" />
+																																	</div>
+																																</div>
+
+
+
+																	
+
+
+                                }else
+																{
+																	<div class="text-right">
+																		<input type="submit" name="nextstep" value="@T("Checkout.ConfirmButton")" class="btn btn-default " />
+																	</div>
+
+																}
+
+														}
+                            if (Model.Warnings.Count > 0)
+                            {
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach (var warning in Model.Warnings)
+                                        {
+                                            <li>@warning</li>
+                                        }
+                                    </ul>
+                                </div>
+                            }
+                        }
+
+                    </div>
+
+
+
+
+                            
+                </div>
+
+                                             
+                    
+                    
+            </div>
+  
+            
+            
+        </div>
+    </div>
+
+</div>
+
+
+
+
+        </div>
+    </div>
+</div>
+

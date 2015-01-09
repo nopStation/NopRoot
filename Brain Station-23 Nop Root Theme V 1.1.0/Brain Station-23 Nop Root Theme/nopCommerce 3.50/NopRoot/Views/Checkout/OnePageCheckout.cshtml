@@ -1,0 +1,288 @@
+﻿@model OnePageCheckoutModel
+@using Nop.Web.Models.Checkout;
+@using Nop.Core.Infrastructure;
+@{
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
+
+    Html.AddScriptParts("~/Scripts/public.accordion.js");
+    Html.AddScriptParts("~/Scripts/public.onepagecheckout.js");
+
+    var storeLocation = EngineContext.Current.Resolve<Nop.Core.IWebHelper>().GetStoreLocation();
+
+    //title
+    Html.AddTitleParts(T("PageTitle.Checkout").Text);
+}
+@{
+    //step numbers
+    int billingAddressStepNumber = 1;
+    int shippingAddressStepNumber = 2;
+    int shippingMethodStepNumber = 3;
+    int paymentMethodStepNumber = 4;
+    int paymentInfoStepNumber = 5;
+    int confirmOrderStepNumber = 6;
+    if (!Model.ShippingRequired)
+    {
+        paymentMethodStepNumber = paymentMethodStepNumber - 2;
+        paymentInfoStepNumber = paymentInfoStepNumber - 2;
+        confirmOrderStepNumber = confirmOrderStepNumber - 2;
+    }
+    if (Model.DisableBillingAddressCheckoutStep)
+    {
+        shippingAddressStepNumber--;
+        shippingMethodStepNumber--;
+        paymentMethodStepNumber--;
+        paymentInfoStepNumber--;
+        confirmOrderStepNumber--;
+    }
+}
+
+<div class="container one-page-checkout-page">
+    <h2 class="title text-center">@T("Checkout")</h2>
+    <div class="custom-page-box-div">
+        
+
+        
+        <div class="opc panel-group" id="checkout-steps">
+
+            <div id="opc-billing" class="panel panel-default tab-section allow">
+                <div class="step-title panel-heading">
+                    <h2 class=" panel-title">
+                        <span class="fa fa-map-marker"></span>
+
+                        
+                        @T("Checkout.BillingAddress")
+                        <span class="pull-right op-number">@billingAddressStepNumber</span>
+                    </h2>
+                </div>
+                
+                <div id="checkout-step-billing" class="step a-item panel-collapse collapse" style="display: none;">
+                    <div class="panel-body">
+                        <form id="co-billing-form" action="">
+                            <div id="checkout-billing-load">
+                                @Html.Action("OpcBillingForm", "Checkout")
+                                @*billing address content will be loaded here*@
+                            </div>
+                        </form>
+                        <script type="text/javascript">
+                            Billing.init('#co-billing-form', '@(storeLocation)checkout/OpcSaveBilling/', @(Model.DisableBillingAddressCheckoutStep.ToString().ToLowerInvariant()));
+                            if ($("#billing-address-select").length > 0) {
+                                Billing.newAddress(!$('#billing-address-select').val());
+                            }
+                        </script>
+                        <div class="buttons" id="billing-buttons-container">
+                            <input type="button" title="@T("Common.Continue")" class="btn btn-primary button-1 new-address-next-step-button" onclick="Billing.save()" value="@T("Common.Continue")" />
+                            <span class="please-wait" id="billing-please-wait" style="display: none;">@T("Common.LoadingNextStep")</span>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            @if (Model.ShippingRequired)
+            {
+                <div id="opc-shipping" class="panel panel-default tab-section">
+                    <div class="step-title panel-heading">
+                          
+                            <h2 class="panel-title">
+                                <span class="fa fa-map-marker"></span>
+                                @T("Checkout.ShippingAddress")
+                                <span class="pull-right op-number">@shippingAddressStepNumber</span>
+                            </h2>
+                
+                    </div>
+                    <div id="checkout-step-shipping" class="panel-collapse collapse step a-item" style="display: none;">
+                        <div class="panel-body">
+                            <form action="" id="co-shipping-form">
+                                <div id="checkout-shipping-load">
+                                    @*shipping address content will be loaded here*@
+                                </div>
+                            </form>
+                            <script type="text/javascript">
+                                Shipping.init('#co-shipping-form', '@(storeLocation)checkout/OpcSaveShipping/');
+                                if ($("#shipping-address-select").length > 0) {
+                                    Shipping.newAddress(!$('#shipping-address-select').val());
+                                }
+                            </script>
+                            <div class="buttons" id="shipping-buttons-container">
+                                <div class="row">
+                                    <div class="col-md-3 pull-left">
+                                        <p class="back-link">
+                                            <a class="btn btn-primary" href="#" onclick="Checkout.back(); return false;"><small>&laquo; </small>@T("Common.Back")</a>
+                                        </p>
+                                    </div>
+                                    <div class="col-md-3 pull-right pull-text-right">
+                                        <input type="button" class="btn btn-primary button-1 new-address-next-step-button" title="@T("Common.Continue")" onclick="Shipping.save()" value="@T("Common.Continue")" />
+                                        <span id="shipping-please-wait" class="please-wait" style="display: none;"> @T("Common.LoadingNextStep")</span>
+                                    </div>
+                                </div>
+                                
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+    <div id="opc-shipping_method" class="panel panel-default tab-section">
+        <div class="step-title panel-heading">
+           
+            <h2 class ="panel-title"><span class="fa fa-truck"></span>@T("Checkout.ShippingMethod") <span class="pull-right op-number">@shippingMethodStepNumber</span></h2>
+        </div>
+        <div id="checkout-step-shipping-method" class="panel-collapse collapse step a-item" style="display: none;">
+            <div class="panel-body">
+                <form id="co-shipping-method-form" action="">
+                    <div id="checkout-shipping-method-load" >
+                        @*shipping methods content will be loaded here*@
+                    </div>
+                    <script type="text/javascript">
+                        ShippingMethod.init('#co-shipping-method-form', '@(storeLocation)checkout/OpcSaveShippingMethod/');
+                    </script>
+
+                    <div class="buttons" id="shipping-method-buttons-container">
+                        
+                        <div class="row">
+                            <div class="col-md-3 pull-left">
+                                <p class="back-link">
+                                    <a class="btn btn-primary" href="#" onclick="Checkout.back(); return false;"><small>&laquo; </small>@T("Common.Back")</a>
+                                </p>
+                            </div>
+                            <div class="col-md-3 pull-right pull-text-right">
+                                <input type="button" class="btn btn-primary button-1 shipping-method-next-step-button" title="@T("Common.Continue")" onclick="ShippingMethod.save()" value="@T("Common.Continue")" />
+                                <span id="shipping-method-please-wait" class="please-wait" style="display: none;"> @T("Common.LoadingNextStep")</span>
+                            </div>
+                        </div>
+
+                       </div>
+                </form>
+            </div>
+        </div>
+    </div>
+            }
+            
+            <div id="opc-payment_method" class="panel panel-default tab-section">
+                <div class="step-title panel-heading">
+                    
+                    <h2 class="panel-title"><span class="fa fa-credit-card"></span>@T("Checkout.PaymentMethod")<span class="pull-right op-number">@paymentMethodStepNumber</span></h2>
+                </div>
+
+                <div id="checkout-step-payment-method" class="panel-collapse collapse step a-item" style="display: none;">
+                    <div class="panel-body">
+                        <form action="" id="co-payment-method-form">
+                            <div id="checkout-payment-method-load">
+                                @*payment methods content will be loaded here*@ Payment is not required
+                            </div>
+                        </form>
+                        <script type="text/javascript">
+                            PaymentMethod.init('#co-payment-method-form', '@(storeLocation)checkout/OpcSavePaymentMethod/');
+                        </script>
+                        <div class="buttons" id="payment-method-buttons-container">
+                            <div class="row">
+                                <div class="col-md-3 pull-left">
+                                    <p class="back-link">
+                                        <a class="btn btn-primary" href="#" onclick="Checkout.back(); return false;"><small>&laquo; </small>@T("Common.Back")</a>
+                                    </p>
+                                </div>
+                                <div class="col-md-3 pull-right pull-text-right">
+                                    <input type="button" class="btn btn-primary button-1 payment-method-next-step-button" title="@T("Common.Continue")" onclick="PaymentMethod.save()" value="@T("Common.Continue")" />
+                                    <span id="payment-method-please-wait" class="please-wait" style="display: none;"> @T("Common.LoadingNextStep")</span>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="opc-payment_info" class="panel panel-default tab-section">
+                <div class="step-title panel-heading">
+                    
+                    
+                    <h2 class ="panel-title"><span class="fa fa-info-circle"></span> @T("Checkout.PaymentInfo")<span class="pull-right op-number">@paymentInfoStepNumber</span></h2>
+            </div>
+
+                <div id="checkout-step-payment-info" class="panel-collapse collapse  step a-item" style="display: none;">
+                    <div class="panel-body">
+                        <form action="" id="co-payment-info-form">
+                            <div id="checkout-payment-info-load">
+                                @*payment info content will be loaded here*@ Payment is not required
+                            </div>
+                        </form>
+                        <script type="text/javascript">
+                            PaymentInfo.init('#co-payment-info-form', '@(storeLocation)checkout/OpcSavePaymentInfo/');
+                        </script>
+
+                        <div class="buttons" id="payment-info-buttons-container">
+                            <div class="row">
+                                <div class="col-md-3 pull-left">
+                                    <p class="back-link">
+                                        <a class="btn btn-primary" href="#" onclick="Checkout.back(); return false;"><small>&laquo; </small>@T("Common.Back")</a>
+                                    </p>
+                                </div>
+                                <div class="col-md-3 pull-right pull-text-right">
+                                    <input type="button" class="btn btn-primary button-1 payment-info-next-step-button" title="@T("Common.Continue")" onclick="PaymentInfo.save()" value="@T("Common.Continue")" />
+                                    <span id="payment-info-please-wait" class="please-wait" style="display: none;"> @T("Common.LoadingNextStep")</span>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        </div>
+                    </div>
+            </div>
+            <div id="opc-confirm_order" class="panel panel-default tab-section">
+                <div class="step-title panel-heading">
+                    
+                    <h2 class="panel-title">
+                        <span class="fa fa-check"></span> @T("Checkout.ConfirmOrder")<span class="pull-right op-number">@confirmOrderStepNumber</span>
+                    </h2>
+                </div>
+                <div id="checkout-step-confirm-order" class="panel-collapse collapse step a-item" style="display: none;">
+                    
+                    <div class="panel-body">
+                        <div id="checkout-confirm-order-load">
+                            $1$confirm order content will be loaded here#1#
+                        </div>
+
+                        <script type="text/javascript">
+                            ConfirmOrder.init('@(storeLocation)checkout/OpcConfirmOrder/', '@(storeLocation)checkout/completed/');
+                        </script>
+                        <div class="buttons" id="confirm-order-buttons-container">
+                            <div class="row">
+                                <div class="col-md-3 pull-left">
+                                    <p class="back-link">
+                                        <a class="btn btn-primary" href="#" onclick="Checkout.back(); return false;"><small>&laquo; </small>@T("Common.Back")</a>
+                                    </p>
+                                </div>
+                                <div class="col-md-3 pull-right pull-text-right">
+                                    <input type="button" class="btn btn-primary button-1 confirm-order-next-step-button" title="@T("Common.Confirm")" onclick="ConfirmOrder.save()" value="@T("Common.Confirm")" />
+                                    <span id="payment-info-please-wait" class="please-wait" style="display: none;"> @T("Checkout.SubmittingOrder")</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+
+
+
+        
+        <script type="text/javascript">
+            Accordion.init('checkout-steps', '.step-title', true);
+            Accordion.openSection('#opc-billing');
+            Checkout.init('@(storeLocation)cart/');
+            if (Billing.disableBillingAddressCheckoutStep)
+            {
+                Accordion.hideSection('#opc-billing');
+                Billing.save();
+            }
+        </script>
+    </div>
+</div>
+
+
+
+        

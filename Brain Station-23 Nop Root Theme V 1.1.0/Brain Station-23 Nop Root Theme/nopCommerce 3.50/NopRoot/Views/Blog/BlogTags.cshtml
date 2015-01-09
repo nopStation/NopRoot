@@ -1,0 +1,19 @@
+﻿@model BlogPostTagListModel
+@using Nop.Web.Models.Blogs
+@if (Model.Tags.Count > 0)
+{
+    <div class="block-popular-blogtags  panel panel-default side-nav">
+        <div class="panel-heading">
+            <strong>@T("Blog.TagCloud")</strong>
+        </div>
+        <div class="listbox listbox panel-body">
+            <ul class="tags">
+                @foreach (var item in Model.Tags)
+                {
+                   <a href="@Url.RouteUrl("BlogByTag", new { tag = item.Name })" style="font-size:@(Model.GetFontSize(item))%;">@item.Name</a>
+                    
+                }
+            </ul>
+        </div>
+    </div>
+}

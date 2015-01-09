@@ -1,0 +1,80 @@
+﻿.configure-button a { color: #01619D; }
+.masthead .navbar-inverse { background-color: #01619D; }
+.navbar-fixed-top.top-menu li > a:hover { background-color: #01619d; color: #FFF; }
+ul.nav.navbar-nav.navbar-right li > a:hover { background-color:  #01619d;; }
+.btn.btn-default { color: #fff; background-color: #01619D; border-color: #01619D; }
+.btn.btn-default:hover,.btn.btn-default:active,.btn.btn-default:focus { color: #fff; background-color: #378FC3; border-color: #378FC3; }
+.panel.panel-default.side-nav, .panel.panel-default.form-panel { border-top: 4px solid #01619d; }
+.mid-content-title { padding: 8px 12px; background-color: #f0f0f0; color: #000; border-bottom: 2px solid #01619d; margin: 0; }
+.navbar-fixed-top.top-menu { border-top: 5px solid #01619d; color: #fff; }
+.navbar-inverse { background-color: #01619d; border-color: #01619d; }
+.navbar-inverse .navbar-brand:hover,
+.navbar-inverse .navbar-brand:focus { color: #01619d; background-color: transparent; }
+.masthead .navbar-inverse .navbar-nav > li > a { border-right: 1px solid #01619d; color: #fff; }
+.top-menu ul.dropdown-menu > li > a { background-color: #fff; color: #FFF; }
+.top-menu ul.dropdown-menu > li > a:hover { padding: 10px 15px; color: #fff; background-color: #378FC3; }
+.top-menu.navbar-default .navbar-nav .open .dropdown-menu > li > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus { background-color: #01619d; color: #fff; }
+.masthead .navbar-inverse .navbar-nav > li > a:hover { background-color: #378FC3; }
+.masthead .dropdown-menu > li > a:hover, .dropdown-menu > li > a { background-color: #01619d; color: #fff; text-decoration: none; }
+.masthead .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus { background-color: #378FC3; color: #fff; text-decoration: none; }
+.top-menu ul.dropdown-menu > li > a { color: #000; }
+.navbar-fixed-top.top-menu li > a:hover { background-color: #01619d; color: #FFF; }
+.navbar-fixed-top.top-menu li > a:active { background-color: #01619d; color: #FFF; }
+.navbar-fixed-top.top-menu li > a:focus { background-color: #01619d; color: #FFF; }
+.ul.nav.navbar-nav.navbar-right li:hover { background-color: #01619d; }
+h3 { color: #01619d; }
+.first-footer h3 { color: #fff; }
+.footer { background-color: #323840; }
+.footer .copyrights { background-color: #282D33; border-top: 1px #282D33 solid; padding-top: 14px; padding-bottom: 14px; }
+ol.breadcrumb { background-color: #F0F0F0; }
+ol.breadcrumb > li > a { color: #28529F; }
+.product-selectors.clearfix > div.col-md-4 { background-color: #F0F0F0; color: #000; padding: 8px; border-radius: 0; border: none; }
+.title-carousel-control:hover { background-color: #01619d; padding: 10px; color: #FFF; border-radius: 0px; text-decoration: none; }
+.tags a { color: #01619d; }
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus { color: #fff; cursor: default; background-color: #01619d; border: 1px solid #dddddd; border-bottom-color: transparent; }
+h2.title { font-family: 'Roboto', sans-serif; font-size: 18px; font-weight: 700; margin: 0 15px; text-transform: uppercase; margin-bottom: 30px; position: relative; }
+/*custom title*/
+.heading { font: 33px sans-serif; margin-top: 30px; position: relative; text-align: center; text-transform: uppercase; z-index: 1; background: #fff; padding: 0 15px; color: #01619d; }
+.heading:before { border-top: 2px solid #f5f5f5; content: ""; margin: 0 auto; /* this centers the line to the full width specified */ position: absolute; /* positioning must be absolute here, and relative positioning must be applied to the parent */ top: 15px; left: 0; right: 0; bottom: 0; width: 95%; z-index: -1; }
+.spn { /* to hide the lines from behind the text, you have to set the background color the same as the container */ background: #fff; padding: 0 15px; }
+#flyout-cart { color: #000; }
+.navbar-right .dropdown li a { color: #000; }
+.pad-left { padding-left: 30px; }
+.pad-right { padding-right: 20px; }
+.pad-bottom { padding-bottom: 15px; }
+.gray-block { height: auto; background-color: #F5F5F5; padding-left: 10px; padding-right: 10px; margin-left: 1px; margin-right: 1px; padding-bottom: 5px; padding-top: 5px; margin-bottom: 15px; }
+blockquote { font-size: 15px; font-style: italic; width: auto; margin: 0.25em 0; padding: 0.25em 40px; line-height: 1.45; position: relative; color: #383838; }
+blockquote:before { display: block; content: "\201C"; font-size: 80px; position: absolute; left: -20px; top: -20px; color: #7a7a7a; }
+.border-right { border-right: 2px dotted #dddddd; }
+.button-bottom { padding-top: 60px; position: relative; padding-bottom: 80px; padding-right: 70px; }
+.centre { width: 284px; display: block; margin-left: auto; margin-right: auto; }
+.box { border-left: 1px solid #999999; border-right: 1px solid #999999; border-top: 1px solid #999999; border-bottom: 1px solid #999999; margin-bottom: 25px; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); padding-top: 15px; }
+.padding-top { margin-top: 15px; }
+.img-middle { padding-left: 80px; }
+.pad-image-title { padding-left: 50px; }
+.gray-background { background-color: #EBEBEB; height: auto; min-width: 100%; }
+.text-group { font: 21/32px 'Open Sans', sans-serif; }
+/* Custom container */
+.container-full { margin: 0 auto; width: 100%; min-width: 100%; }
+/*------------------------------------*\
+  Theme Color Picker style start
+\*------------------------------------*/
+.theme-color-picker { position: fixed; top: 200px; right: 0px; z-index: 9; }
+.configure-button { background-color: #696763; color: #ffffff; height: 50px; width: 50px; position: absolute; right: 0px; padding: 11px 14px; transition: all 0.5s ease 0s; -moz-transition: all 0.5s ease 0s; -webkit-transition: all 0.5s ease 0s; -o-transition: all 0.5s ease 0s; }
+.configure-button a:hover { color: #ffffff; }
+.options-choosing-palette { padding: 10px 0px 10px 17px; }
+.color-options { height: 120px; width: 200px; border: 1px solid #696763; right: -200px; position: absolute; transition: all 0.5s ease 0s; -moz-transition: all 0.5s ease 0s; -webkit-transition: all 0.5s ease 0s; -o-transition: all 0.5s ease 0s; background: #ffffff; }
+.color-options h3 { padding: 0px 30px; }
+.color-options ul { padding: 0px; margin: 0px; margin-top: 10px; }
+.color-options ul li { padding: 5px 0px; margin: 0px; display: inline; margin-right: 10px; }
+/*------------------------------------*\
+   Theme Color Picker style End
+\*------------------------------------*/
+/*badge number css start*/
+.op-number { background-color: #01619d; border: 1px #01619d  }
+/*badge number css end*/
+.rec-banner.active_position { background-color: #378FC3; color: #FFF; }
+.rec-banner.active_position:hover,.rec-banner.deactive_position:hover { background-color: #01619d; color: #FFF; }
+.rec-banner.deactive_position a:hover,.rec-banner.deactive_position a:active { text-decoration: none; color: #01619d; }
+.forums-table-section .forums-table-section-body thead { background-color: #378FC3; color: #ffffff; }
+.masthead .navbar-inverse .navbar-nav > .open > a,.masthead .navbar-inverse .navbar-nav > .open > a:hover,.masthead .navbar-inverse .navbar-nav > .open > a:focus{ background-color: #378FC3;}

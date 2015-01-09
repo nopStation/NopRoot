@@ -1,0 +1,55 @@
+﻿@model BoardsIndexModel
+@using Nop.Web.Models.Boards;
+@{
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
+
+    Html.AddTitleParts(T("Forum.PageTitle.Default").Text);
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 ">
+            @Html.Action("TopicBlock", "Topic", new { systemName = "ForumWelcomeMessage" })
+
+        </div> 
+    </div>
+</div>
+
+<div @*class="forums-main-page panel panel-default form-panel"*@>
+    
+    
+
+    <div class="container">
+        <div class=" offer offer-default">
+            <div class="row">
+                <div class="col-md-4 current-time">
+                    <h5> <strong> @Model.CurrentTime.ToString("F")</strong></h5>
+                </div>
+                <div class="col-md-offset-5 col-md-3">
+                    @Html.Partial("_SearchBox")
+                </div>
+            </div>    
+        </div>
+            
+    </div>
+    <div class="row clearfix space10"></div>
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                @foreach (var forumGroup in Model.ForumGroups)
+                {
+                    Html.RenderPartial("_ForumGroup", forumGroup);
+                }
+                @Html.Action("ActiveDiscussionsSmall")
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+

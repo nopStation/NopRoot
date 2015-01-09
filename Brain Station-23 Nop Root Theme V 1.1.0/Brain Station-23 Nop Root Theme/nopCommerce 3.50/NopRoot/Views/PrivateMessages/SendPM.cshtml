@@ -1,0 +1,75 @@
+﻿@model SendPrivateMessageModel
+@using Nop.Web.Extensions;
+@using Nop.Web.Models.PrivateMessages;
+@{    
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
+
+    Html.AddTitleParts(T("PageTitle.SendPM").Text);
+}
+@using (Html.BeginForm())
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="page forum-edit-page">
+                    <div class="panel panel-default form-panel">
+                        <div class="panel-heading">
+                            <h1>@T("PrivateMessages.Send.PostMessage")</h1>
+                        </div>
+                        <div class="panel-body">
+                            <div class="message-error">
+                                @Html.ValidationSummary(true)
+                            </div>
+                            @Html.HiddenFor(model => model.ToCustomerId)
+                            @Html.HiddenFor(model => model.ReplyToMessageId)
+                            <div class="form-fields">
+                                <div class="form-group row">
+                                    <div class="col-md-2">
+                                        <label>@T("PrivateMessages.Send.To")</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        @if (Model.AllowViewingToProfile)
+                                        {
+                                            <a href="@Url.RouteUrl("CustomerProfile", new { id = Model.ToCustomerId })">@(Model.CustomerToName)</a>
+                                        }
+                                        else
+                                        {
+                                            @Model.CustomerToName
+                                        }
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-2">
+                                        <label>@T("PrivateMessages.Send.Subject")</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        @Html.TextBoxFor(model => model.Subject, new { @class = "pm-title-text" })
+                                    </div>
+                                    <div class="col-md-4">
+                                       @Html.ValidationMessageFor(model => model.Subject)
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-2">
+                                        <label>@T("PrivateMessages.Send.Message")</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        @Html.BBCodeEditor("Message")
+                                        @Html.TextAreaFor(model => model.Message, new { @class = "forum-post-text, form-control", TextMode = "MultiLine", rows = "10" })
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.ValidationMessageFor(model => model.Message)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="buttons">
+                                <input type="submit" value="@T("PrivateMessages.Send.SendButton")" class="button-2 submit-topic-button btn btn-default" />
+                                <input type="button" class="button-2 cancel-topic-button btn btn-default" value="@T("PrivateMessages.Send.CancelButton")" onclick="setLocation('@Url.RouteUrl("PrivateMessages")')" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

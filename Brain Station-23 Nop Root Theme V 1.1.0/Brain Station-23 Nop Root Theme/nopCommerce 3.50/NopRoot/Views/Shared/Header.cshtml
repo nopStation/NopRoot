@@ -1,0 +1,41 @@
+﻿
+<div class="navbar navbar-default navbar-fixed-top top-menu" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".test">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse test">
+            @Html.Widget("header")
+            @Html.Action("HeaderLinks", "Common")
+            @*@Html.Action("FlyoutShoppingCart", "ShoppingCart")*@
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            @Html.Partial("_Notifications")
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+            <a href="@Url.RouteUrl("HomePage")" class="logo">&nbsp; </a>
+        </div>
+        <div class="col-md-8">
+            <div class="search-box col-lg-8 col-md-8 col-sm-12 col-xs-12 pull-right">
+                @Html.Action("SearchBox", "Catalog")
+            </div>
+            @*@Html.Widget("header_selectors")*@
+        </div>
+    </div>
+</div>
+<div class="down-space-30"></div>
+
+
